@@ -1,5 +1,5 @@
 {
-  "name": "morning-fog",
+  "name": "pillo",
   "version": "1.0.0",
   "description": "My app description",
   "scripts": {
@@ -45,5 +45,29 @@
   },
   "engines": {
     "node": "6.1.0"
-  }
+  },
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KayvanMazaheri/pillo.git"
+  },
+  "keywords": [
+    "pillo",
+    "reminder",
+    "medication",
+    "medicine",
+    "healthcare",
+    "health",
+    "pill",
+    "medical"
+  ],
+  "author": "Kayvan Mazaheri <KayvanMazaheri@GMail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KayvanMazaheri/pillo/issues"
+  },
+  "homepage": "https://github.com/KayvanMazaheri/pillo#readme"
 }
