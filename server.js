@@ -10,6 +10,7 @@ var expressValidator = require('express-validator');
 var dotenv = require('dotenv');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var kue = require('kue');
 
 // Load environment variables from .env file
 dotenv.load();
@@ -24,6 +25,9 @@ require('./config/passport');
 
 var app = express();
 
+var queue = kue.createQueue({
+  redis: process.env.REDIS_URL
+});
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {

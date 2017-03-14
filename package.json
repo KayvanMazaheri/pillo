@@ -24,6 +24,7 @@
     "express-session": "^1.2.1",
     "express-validator": "^2.20.4",
     "jade": "^1.11.0",
+    "kue": "^0.11.5",
     "less": "^2.7.1",
     "method-override": "^2.3.5",
     "mongoose": "^4.4.8",
