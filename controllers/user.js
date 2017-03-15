@@ -353,6 +353,9 @@ exports.resetPost = function(req, res, next) {
   ]);
 };
 
+
+exports.link = {};
+
 /**
  * POST /link/push/:deviceId
  */
@@ -368,10 +371,10 @@ exports.link.push = function(req, res, next) {
       user.save(function(err){
         req.flash('success', { msg: 'Device linked successfully.' });
         res.redirect('/account');
-      })
+      });
     } else {
       req.flash('error', { msg: 'Device already linked.' });
       res.redirect('/account');
     }
-  }
+  });
 };
