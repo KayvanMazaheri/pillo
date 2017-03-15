@@ -70,7 +70,7 @@ block content
           legend Linked Accounts
           .form-group
             .col-sm-offset-3.col-sm-4
-              if user.pushDeviceIds and user.pushDeviceIds.length > 0
+              if user.pushDeviceIds
                 for deviceId in user.pushDeviceIds
                   p: a.text-success(href="#"+deviceId)=deviceId
               p: a#newPushLink.text-danger(href='/link/push/') Register this device for push notifications
@@ -89,6 +89,7 @@ block content
             .col-sm-offset-3.col-sm-9
               button.btn.btn-danger(type='submit') Delete my account
 
+block scripts
   script.
     var newPushLinkeHref = $("#newPushLink").attr("href");
     OneSignal.push(function() {
