@@ -363,7 +363,7 @@ exports.link.pushPost = function(req, res, next) {
   var deviceId = req.body.deviceId;
   if (!(deviceId && deviceId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))) {
     req.flash('error', { msg: 'Device ID is not valid or not available.' });
-    res.redirect('/account');
+    return res.redirect('/account');
   }
   User.findById(req.user.id, function(err, user) {
     if (user.pushDeviceIds.indexOf(deviceId) === -1) {
