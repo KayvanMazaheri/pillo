@@ -84,11 +84,6 @@ block content
           legend Linked Accounts
           .form-group
             .col-sm-offset-3.col-sm-4
-              if user.pushDeviceIds
-                for deviceId in user.pushDeviceIds
-                  p: a.text-success(href="#"+deviceId)=deviceId
-              p: a#newPushLink.text-danger(href='/link/push/') Register this device for push notifications
-            .col-sm-offset-3.col-sm-4
               if user.google
                 p: a.text-danger(href='/unlink/google') Unlink your Google account
               else
