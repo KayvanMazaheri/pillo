@@ -74,7 +74,7 @@ app.post('/forgot', userController.forgotPost);
 app.get('/reset/:token', userController.resetGet);
 app.post('/reset/:token', userController.resetPost);
 app.get('/logout', userController.logout);
-app.get('/link/push/:deviceId', userController.ensureAuthenticated, userController.link.push);
+app.post('/link/push', userController.ensureAuthenticated, userController.link.pushPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));
