@@ -193,7 +193,7 @@ exports.unlink = function(req, res, next) {
         break;
       case 'github':
           user.github = undefined;
-        break;      
+        break;
       default:
         req.flash('error', { msg: 'Invalid OAuth Provider' });
         return res.redirect('/account');
@@ -351,4 +351,27 @@ exports.resetPost = function(req, res, next) {
       });
     }
   ]);
+};
+
+/**
+ * POST /link/push/:deviceId
+ */
+exports.link.push = function(req, res, next) {
+  var deviceId = req.params.deviceId;
+  if (!(deviceId && deviceId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))) {
+    req.flash('error', { msg: 'Device ID is not valid.' });
+    res.redirect('/account');
+  }
+  User.findById(req.user.id, function(err, user) {
+    if (user.pushDeviceIds.indexOf(deviceId) === -1) {
+      user.pushDeviceIds.push(deviceId);
+      user.save(function(err){
+        req.flash('success', { msg: 'Device linked successfully.' });
+        res.redirect('/account');
+      })
+    } else {
+      req.flash('error', { msg: 'Device already linked.' });
+      res.redirect('/account');
+    }
+  }
 };
