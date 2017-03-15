@@ -7,7 +7,7 @@ var schemaOptions = {
   }
 };
 
-var getExpireDefault = function(milliseconds) {
+var getExpireDefault = function(milliseconds = 60 * 1000) {
   var timeObject = new Date();
   timeObject.setTime(timeObject.getTime() + milliseconds);
   return timeObject;
@@ -16,12 +16,19 @@ var getExpireDefault = function(milliseconds) {
 var tokenSchema = new mongoose.Schema({
   token: { type: String, required: true, unique: true },
   tokenType: { type: String },
-  tokenID: { type: String }
+  tokenID: { type: String },
   data: { type: Object },
-  expires: { type: Date, required: true, default: getExpireDefault(3 * 60 * 60 * 1000) }
+  expires: { type: Date, required: true, default: getExpireDefault(), set: function(val) { return val || getExpireDefault(); } }
 }, schemaOptions);
+//
+// tokenSchema.pre('save', function(next) {
+//   var token = this;
+//   if (token.expires && !token.isModified('expires')) { return next(); }
+//   if (token.expires == null) token.expires = getExpireDefault();
+//   next();
+// });
 
-userSchema.options.toJSON = {
+tokenSchema.options.toJSON = {
   transform: function(doc, ret, options) {
     delete ret.expires;
   }

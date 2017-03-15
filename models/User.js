@@ -24,6 +24,7 @@ var userSchema = new mongoose.Schema({
   google: String,
   github: String,
   pushDeviceIds: { type: Array, default: [] },
+  telegramToken: { type: String },
   vk: String
 }, schemaOptions);
 
