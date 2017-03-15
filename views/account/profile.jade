@@ -88,6 +88,12 @@ block content
                 p: a.text-danger(href='/unlink/google') Unlink your Google account
               else
                 p: a(href='/auth/google') Link your Google account
+          .form-group
+            .col-sm-offset-3.col-sm-4
+              if user.telegramToken
+                p.text-success Linked to Telegram
+              else
+                p: a(href='#') Link your Telegram account
 
     .panel
       .panel-body

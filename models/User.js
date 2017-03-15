@@ -58,6 +58,8 @@ userSchema.options.toJSON = {
     delete ret.password;
     delete ret.passwordResetToken;
     delete ret.passwordResetExpires;
+    if(ret.telegramToken)
+      ret.telegramToken = true;
   }
 };
 
