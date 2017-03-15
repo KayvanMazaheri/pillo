@@ -85,6 +85,7 @@ app.get('/reset/:token', userController.resetGet);
 app.post('/reset/:token', userController.resetPost);
 app.get('/logout', userController.logout);
 app.post('/link/push', userController.ensureAuthenticated, userController.link.pushPost);
+app.get('/link/telegram/:token', userController.ensureAuthenticated, userController.link.telegramGet);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));

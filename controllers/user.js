@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
+var Token = require('../models/Token');
 
 /**
  * Login required middleware
@@ -377,4 +378,39 @@ exports.link.pushPost = function(req, res, next) {
       res.redirect('/account');
     }
   });
+};
+
+/**
+ * POST /link/telegram/:token
+ */
+exports.link.telegramGet = function(req, res, next) {
+  var telegramToken = req.params.token;
+  if (!telegramToken) {
+    req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' });
+    return res.redirect('/account');
+  }
+  Token.findOne({ token: telegramToken, tokenType: 'telegram' })
+    .where('expires').gt(Date.now())
+    .exec(function(err, token) {
+      if (err || !user) {
+        req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' });
+        return res.redirect('/account');
+      } else {
+        User.findById(req.user.id, function(err, user) {
+          if(err) {
+            req.flash('error', { msg: 'An error occured, contact system admin for more info.' });
+            return res.redirect('/account');
+          } else if (user.telegramToken === token.data.telegramChatId) {
+            req.flash('error', { msg: 'Telegram client already linked.' });
+            return res.redirect('/account');
+          } else {
+            user.telegramToken = token.data.telegramChatId;
+            user.save(function(err) {
+              req.flash('success', { msg: 'Telegram client linked successfully.' });
+              return res.redirect('/account');
+            });
+          }
+        });
+      }
+    });
 };
