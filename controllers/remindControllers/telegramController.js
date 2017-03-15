@@ -8,8 +8,38 @@ const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
 const telegramBot = new TelegramBot(telegramBotToken, {polling: true});
 
-// get telegram token
-telegramBot.onText(/\/start/, function(req, match) {
+// Display Help
+// /start and /help
+telegramBot.onText(/\/(start|help)/, function(req, match) {
+  let text = "Hello " + (req.chat.first_name || req.chat.username) + ",\n";
+  text += "Pillo is a simple medication reminder.\n\n";
+  text += "Start by connecting your Pillo account to Telegram by touching:\n";
+  text += "/token\n\n\n";
+  text += "Visit http://pillo.ir for more info.";
+
+  let options = {
+    reply_markup: {
+      one_time_keyboard: true,
+      keyboard: [
+        [
+          {
+            text: '/help'
+          }
+        ],
+        [
+          {
+            text: '/token'
+          }
+        ]
+      ]
+    }
+  };
+  telegramBot.sendMessage(req.chat.id, text, options);
+});
+
+// Get Telegram Token
+// /token
+telegramBot.onText(/\/token/, function(req, match) {
   async.waterfall([
     function(done) {
       crypto.randomBytes(16, function(err, buf) {
@@ -52,8 +82,29 @@ telegramBot.onText(/\/start/, function(req, match) {
       telegramBot.sendMessage(req.chat.id, "An error occured, contact system admin for more info.");
     } else {
       let registerTelegramURL = 'http://pillo.ir/link/telegram/' + tokenString;
-      telegramBot.sendMessage(req.chat.id, "Click on the link to register your telegram account.");
-      telegramBot.sendMessage(req.chat.id, registerTelegramURL);
+      let text = "Integrate Telegram with your Pillo account.\n\n"
+      text += "Please note that you need to be logged in first.\n";
+
+      let options = {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "Log In",
+                url: "http://pillo.ir/login"
+              }
+            ],
+            [
+              {
+                text: "Connect Now!",
+                url: registerTelegramURL
+              }
+            ]
+          ]
+        }
+      };
+      telegramBot.sendMessage(req.chat.id, text, options)
+      // telegramBot.sendMessage(req.chat.id, registerTelegramURL);
     }
   });
 });
