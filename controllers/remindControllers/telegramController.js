@@ -32,7 +32,7 @@ telegramBot.onText(/\/start/, function(req, match) {
               done(null, savedToken.token)
             }
           });
-        } else if (new Date(existingToken.expires) < new Date() ) {
+        } else if (new Date(existingToken.expires) <= new Date() ) {
           existingToken.expires = null;
           existingToken.token = tokenString;
           existingToken.save(function(err, savedToken) {
