@@ -11,7 +11,7 @@ const telegramBot = new TelegramBot(telegramBotToken, {polling: true});
 // Display Help
 // /start and /help
 telegramBot.onText(/\/(start|help)/, function(req, match) {
-  let text = "Hello " + (req.chat.first_name || req.chat.username) + ",\n";
+  let text = "Hello " + (req.chat.first_name || req.chat.username || "Friend") + ",\n";
   text += "Pillo is a simple medication reminder.\n\n";
   text += "Start by connecting your Pillo account to Telegram by touching:\n";
   text += "/token\n\n\n";
