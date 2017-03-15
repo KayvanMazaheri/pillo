@@ -11,6 +11,7 @@ var dotenv = require('dotenv');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var kue = require('kue');
+var mongoStore = require('connect-mongo')(session);
 
 // Load environment variables from .env file
 dotenv.load();
@@ -49,7 +50,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(methodOverride('_method'));
-app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true, 
+  saveUninitialized: true,
+  store : new mongoStore({
+		mongooseConnection : mongoose.connection,
+		touchAfter: 24 * 3600
+	})
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
