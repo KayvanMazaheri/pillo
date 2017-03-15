@@ -24,6 +24,7 @@ telegramBot.onText(/\/start/, function(req, match) {
           token.token = tokenString;
           token.tokenType = 'telegram';
           token.tokenID = req.chat.id;
+          token.data = { telegramChatId: req.chat.id };
           token.save(function(err, savedToken) {
             if (err) {
               done(err);
