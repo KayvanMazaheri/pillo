@@ -30,6 +30,7 @@
     "method-override": "^2.3.5",
     "mongoose": "^4.4.8",
     "morgan": "^1.7.0",
+    "node-telegram-bot-api": "^0.27.0",
     "nodemailer": "^2.3.0",
     "nodemon": "^1.9.1",
     "npm-run-all": "^1.8.0",
