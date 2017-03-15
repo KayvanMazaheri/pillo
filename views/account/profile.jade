@@ -74,7 +74,7 @@ block content
                 if user.pushDeviceIds
                   for deviceId in user.pushDeviceIds
                     p: a.text-success(href="#"+deviceId)=deviceId
-                input.form-control(type='hidden', name='deviceId', id='deviceId', value='null')
+                input.form-control(type='hidden', name='deviceId', id='deviceId')
                 button.btn.btn-success(type='submit') Register device for push notifications
 
 
