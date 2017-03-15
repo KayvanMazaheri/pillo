@@ -20,6 +20,7 @@ dotenv.load();
 var HomeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
+var remindController = require('./controllers/remind');
 
 // Passport OAuth strategies
 require('./config/passport');
@@ -34,7 +35,7 @@ var queue = kue.createQueue({
 // queue.process('remind-console', remindController.consoleController);
 // queue.process('remind-email', remindController.emailController);
 // queue.process('remind-sms', remindController.smsController);
-// queue.process('remind-telegram', remindController.telegramController);
+queue.process('remind-telegram', remindController.telegramController);
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
@@ -52,7 +53,7 @@ app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: true, 
+  resave: true,
   saveUninitialized: true,
   store : new mongoStore({
 		mongooseConnection : mongoose.connection,
