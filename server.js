@@ -25,9 +25,15 @@ require('./config/passport');
 
 var app = express();
 
+// Kue Job Queue
 var queue = kue.createQueue({
   redis: process.env.REDIS_URL
 });
+
+// queue.process('remind-console', remindController.consoleController);
+// queue.process('remind-email', remindController.emailController);
+// queue.process('remind-sms', remindController.smsController);
+// queue.process('remind-telegram', remindController.telegramController);
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
@@ -68,6 +74,7 @@ app.post('/forgot', userController.forgotPost);
 app.get('/reset/:token', userController.resetGet);
 app.post('/reset/:token', userController.resetPost);
 app.get('/logout', userController.logout);
+app.post('/link/push/:deviceId', userController.ensureAuthenticated, userController.link.push);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));

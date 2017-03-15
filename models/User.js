@@ -23,6 +23,7 @@ var userSchema = new mongoose.Schema({
   twitter: String,
   google: String,
   github: String,
+  pushDeviceIds: { type: Array, default: [] },
   vk: String
 }, schemaOptions);
 
