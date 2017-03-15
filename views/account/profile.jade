@@ -91,9 +91,9 @@ block content
 
 block scripts
   script.
-    var newPushLinkeHref = $("#newPushLink").attr("href");
     OneSignal.push(function() {
     OneSignal.getUserId(function(userId) {
+    var newPushLinkeHref = $("#newPushLink").attr("href");
     $("#newPushLink").attr("href", newPushLinkHref + userId)
     });
     });
