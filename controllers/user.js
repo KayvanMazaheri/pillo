@@ -392,7 +392,7 @@ exports.link.telegramGet = function(req, res, next) {
   Token.findOne({ token: telegramToken, tokenType: 'telegram' })
     .where('expires').gt(Date.now())
     .exec(function(err, token) {
-      if (err || !user) {
+      if (err || !token) {
         req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' });
         return res.redirect('/account');
       } else {
@@ -400,7 +400,7 @@ exports.link.telegramGet = function(req, res, next) {
           if(err) {
             req.flash('error', { msg: 'An error occured, contact system admin for more info.' });
             return res.redirect('/account');
-          } else if (user.telegramToken === token.data.telegramChatId) {
+          } else if (user.telegramToken == token.data.telegramChatId) {
             req.flash('error', { msg: 'Telegram client already linked.' });
             return res.redirect('/account');
           } else {
