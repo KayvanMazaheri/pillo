@@ -6,6 +6,22 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
     title= title
     link(rel='stylesheet', href='/css/main.css')
+    // One Signal Config
+    script(src='https://cdn.onesignal.com/sdks/OneSignalSDK.js', async='async')
+    script.
+      var OneSignal = window.OneSignal || [];
+      OneSignal.push(["init", {
+      appId: "e2c51460-313e-4cc6-837c-819c157e5e63",
+      safari_web_id: 'web.onesignal.auto.2bd24c9c-6b5e-41da-a209-1033c3319dfc',
+      autoRegister: false,
+      subdomainName: 'pillo',
+      httpPermissionRequest: {
+      enable: true
+      },
+      notifyButton: {
+      enable: true
+      }
+      }]);
   body
     include includes/header
     block content
