@@ -93,7 +93,7 @@ block scripts
   script.
     OneSignal.push(function() {
     OneSignal.getUserId(function(userId) {
-    var newPushLinkeHref = $("#newPushLink").attr("href");
-    $("#newPushLink").attr("href", newPushLinkHref + userId)
+    var newPushLinkHref = $("#newPushLink").attr("href");
+    $("#newPushLink").attr("href", newPushLinkHref + userId);
     });
     });
