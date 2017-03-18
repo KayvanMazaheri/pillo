@@ -40,7 +40,7 @@ module.exports = function(job, done) {
         token.token = tokenString
         token.type = 'pill'
         token.data = {
-          pillId = pill._id
+          pillId: pill.id
         }
 
         pill.tookOne(function (err, updatedPill) {
@@ -63,18 +63,18 @@ module.exports = function(job, done) {
           done(err)
         } else {
           let remindersData = {
-            pillId = savedPill._id
-            date = savedPill.rule.currentDate
-            token = savedToken.token
+            pillId: savedPill.id,
+            date: savedPill.rule.currentDate,
+            token: savedToken.token
           }
           job.methods.forEach(function (method){
             queue.create(method, remindersData).delay(remindersData.date).attempts(5).backoff(true).save()
           })
           let remindRemindDate = {
-            userId = job.userId
-            pillId = job.pillId
-            methods = job.methods
-            token = savedToken.token
+            userId: job.userId,
+            pillId: job.pillId,
+            methods: job.methods,
+            token: savedToken.token
           }
           queue.create('remind-remind', remindRemindDate).delay(remindersData.data).attempts(5).backoff(true).save(function (err) {
             done (err)
