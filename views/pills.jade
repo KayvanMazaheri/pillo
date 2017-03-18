@@ -50,7 +50,30 @@ block content
           .form-group
             label.col-sm-3(for='icon') Icon
             .col-sm-7
-              input.form-control(type='text', name='icon', id='icon', disabled)
+              select#icon.image-picker(name='icon')
+                optgroup(label='Tablet')
+                  option(data-img-src='/assets/image/icon/tablet-l-0.png', data-img-alt='Large Tablet #0', value='/assets/image/icon/tablet-l-0.png') Large Tablet #0
+                  option(data-img-src='/assets/image/icon/tablet-l-1.png', data-img-alt='Large Tablet #1', value='/assets/image/icon/tablet-l-1.png') Large Tablet #1
+                  option(data-img-src='/assets/image/icon/tablet-l-2.png', data-img-alt='Large Tablet #2', value='/assets/image/icon/tablet-l-2.png') Large Tablet #2
+                  option(data-img-src='/assets/image/icon/tablet-l-3.png', data-img-alt='Large Tablet #3', value='/assets/image/icon/tablet-l-3.png') Large Tablet #3
+                  option(data-img-src='/assets/image/icon/tablet-l-4.png', data-img-alt='Large Tablet #4', value='/assets/image/icon/tablet-l-4.png') Large Tablet #4
+                  //option(data-img-src='/assets/image/icon/tablet-m-0.png', data-img-alt='Medium Tablet #0', value='/assets/image/icon/tablet-m-0.png') Medium Tablet #0
+                  //option(data-img-src='/assets/image/icon/tablet-m-1.png', data-img-alt='Medium Tablet #1', value='/assets/image/icon/tablet-m-1.png') Medium Tablet #1
+                  //option(data-img-src='/assets/image/icon/tablet-m-2.png', data-img-alt='Medium Tablet #2', value='/assets/image/icon/tablet-m-2.png') Medium Tablet #2
+                  //option(data-img-src='/assets/image/icon/tablet-m-3.png', data-img-alt='Medium Tablet #3', value='/assets/image/icon/tablet-m-3.png') Medium Tablet #3
+                  //option(data-img-src='/assets/image/icon/tablet-m-4.png', data-img-alt='Medium Tablet #4', value='/assets/image/icon/tablet-m-4.png') Medium Tablet #4
+                  //option(data-img-src='/assets/image/icon/tablet-s-0.png', data-img-alt='Small Tablet #0', value='/assets/image/icon/tablet-s-0.png') Small Tablet #0
+                  //option(data-img-src='/assets/image/icon/tablet-s-1.png', data-img-alt='Small Tablet #1', value='/assets/image/icon/tablet-s-1.png') Small Tablet #1
+                  //option(data-img-src='/assets/image/icon/tablet-s-2.png', data-img-alt='Small Tablet #2', value='/assets/image/icon/tablet-s-2.png') Small Tablet #2
+                  //option(data-img-src='/assets/image/icon/tablet-s-3.png', data-img-alt='Small Tablet #3', value='/assets/image/icon/tablet-s-3.png') Small Tablet #3
+                  //option(data-img-src='/assets/image/icon/tablet-s-4.png', data-img-alt='Small Tablet #4', value='/assets/image/icon/tablet-s-4.png') Small Tablet #4
+                optgroup(label='Pill')
+                  option(data-img-src='/assets/image/icon/pill-0.png', data-img-alt='Pill #0', value='/assets/image/icon/pill-0.png') Pill #0
+                  option(data-img-src='/assets/image/icon/pill-1.png', data-img-alt='Pill #1', value='/assets/image/icon/pill-1.png') Pill #1
+                  option(data-img-src='/assets/image/icon/pill-2.png', data-img-alt='Pill #2', value='/assets/image/icon/pill-2.png') Pill #2
+                  option(data-img-src='/assets/image/icon/pill-3.png', data-img-alt='Pill #3', value='/assets/image/icon/pill-3.png') Pill #3
+                  option(data-img-src='/assets/image/icon/pill-4.png', data-img-alt='Pill #4', value='/assets/image/icon/pill-4.png') Pill #4
+
           hr
           .form-group
             label.col-sm-3 Start Date
@@ -72,6 +95,7 @@ block content
             .col-sm-4.col-sm-offset-3
               button.btn.btn-success(type='submit') Add Pill
 block scripts
+  script(src='/js/lib/image-picker/image-picker.js')
   script(src='/js/lib/pickadate/picker.js')
   script(src='/js/lib/pickadate/picker.date.js')
   script(src='/js/lib/pickadate/picker.time.js')
@@ -81,3 +105,4 @@ block scripts
     $('#nextDate').pickadate();
     $('#startTime').pickatime();
     $('#nextTime').pickatime();
+    $("#icon").imagepicker()
