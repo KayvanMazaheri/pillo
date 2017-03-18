@@ -1,0 +1,73 @@
+extends layout
+
+block content
+  .container
+    .panel
+      .panel-body
+        if messages.success
+          .alert.alert-success(role='alert')
+            for success in messages.success
+              div= success.msg
+        if messages.error
+          .alert.alert-danger(role='alert')
+            for error in messages.error
+              div= error.msg
+
+        div.form-horizontal
+          legend Pills Information
+          table.table.table-striped
+            thead
+              tr
+                th #
+                th Icon
+                th Title
+                th Description
+                th Time
+            tbody
+              for pill, index in pills
+                tr
+                  th(scope='row') (index+1)
+                  th: img.img-responsive.img-thumbnail(src= pill.icon)
+                  th #{pill.title}
+                  th #{pill.description}
+                  th #{moment(pill.rule.currentDate).fromNow()
+            unless pills
+              .alert.alert-info(role='note')
+                p No Pills Available.
+
+    .panel
+      .panel-body
+        form.form-horizontal(method='POST', action='/pill')
+          legend New Pill
+          .form-group
+            label.col-sm-3(for='title') Title
+            .col-sm-7
+              input.form-control(type='text', name='title', id='title')
+          .form-group
+            label.col-sm-3(for='description') Description
+            .col-sm-7
+              input.form-control(type='text', name='description', id='description')
+          .form-group
+            label.col-sm-3(for='icon') Icon
+            .col-sm-7
+              input.form-control(type='text', name='icon', id='icon', disabled)
+          hr
+          .form-group
+            label.col-sm-3 Start Date
+            .col-sm-7
+              input.form-control(type='text', name='startDate', id='startDate')
+          .form-group
+            label.col-sm-3 Start Time
+            .col-sm-7
+              input.form-control(type='text', name='startTime', id='startTime')
+          .form-group
+            label.col-sm-3 Next Date
+            .col-sm-7
+              input.form-control(type='text', name='nextDate', id='nextDate')
+          .form-group
+            label.col-sm-3 Next Time
+            .col-sm-7
+              input.form-control(type='text', name='nextTime', id='nextTime')
+          .form-group
+            .col-sm-4.col-sm-offset-3
+              button.btn.btn-success(type='submit') Add Pill
