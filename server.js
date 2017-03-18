@@ -16,6 +16,11 @@ var mongoStore = require('connect-mongo')(session);
 // Load environment variables from .env file
 dotenv.load();
 
+// Kue Job Queue
+var queue = kue.createQueue({
+  redis: process.env.REDIS_URL
+});
+
 // Controllers
 var HomeController = require('./controllers/home');
 var userController = require('./controllers/user');
@@ -27,11 +32,6 @@ var pillsController = require('./controllers/pills');
 require('./config/passport');
 
 var app = express();
-
-// Kue Job Queue
-var queue = kue.createQueue({
-  redis: process.env.REDIS_URL
-});
 
 // queue.process('remind-console', remindController.consoleController);
 // queue.process('remind-email', remindController.emailController);
