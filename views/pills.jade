@@ -30,7 +30,7 @@ block content
                   th: img.img-responsive.img-thumbnail(src= pill.icon)
                   th #{pill.title}
                   th #{pill.description}
-                  th #{moment(pill.rule.currentDate).fromNow()
+                  th #{moment(pill.rule.currentDate).fromNow()}
             unless pills
               .alert.alert-info(role='note')
                 p No Pills Available.
