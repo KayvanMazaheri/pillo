@@ -14,6 +14,7 @@ var getDateOffset = function(milliseconds = 0) {
 }
 
 var pillSchema = new mongoose.Schema({
+  userId: { type: Schema.Types.ObjectId, required: true },
   title: { type: String, required: true },
   description: String,
   icon: String,
