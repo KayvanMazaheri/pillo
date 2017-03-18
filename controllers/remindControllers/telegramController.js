@@ -109,6 +109,6 @@ telegramBot.onText(/\/token/, function(req, match) {
   });
 });
 
-module.exports = function() {
+module.exports = function(job, done) {
 
 };
