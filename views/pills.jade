@@ -31,9 +31,9 @@ block content
                   th #{pill.title}
                   th #{pill.description}
                   th #{moment(pill.rule.currentDate).fromNow()}
-            unless pills && pills.length
-              .alert.alert-info(role='note')
-                p No Pills Available.
+          unless pills && pills.length
+            .alert.alert-info(role='note')
+              p No Pills Available.
 
     .panel
       .panel-body
