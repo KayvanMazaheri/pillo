@@ -36,6 +36,7 @@ var queue = kue.createQueue({
 // queue.process('remind-email', remindController.emailController);
 // queue.process('remind-sms', remindController.smsController);
 queue.process('remind-telegram', remindController.telegramController);
+queue.process('remind-remind', remindController.remindController);
 
 mongoose.connect(process.env.MONGODB);
 mongoose.connection.on('error', function() {
