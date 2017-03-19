@@ -3,6 +3,7 @@ const async = require('async');
 const crypto = require('crypto');
 const User = require('../../models/User');
 const Token = require('../../models/Token');
+const Pill = require('../../models/Pill');
 
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -110,5 +111,32 @@ telegramBot.onText(/\/token/, function(req, match) {
 });
 
 module.exports = function(job, done) {
-
+  Pill.findById(job.pillId, function(err, pill) {
+    if (err) {
+      done(err)
+    } else if (!pill){
+      // no pill with this id
+      done()
+    } else {
+      User.findById(pill.userId, function(err, user) {
+        if (err) {
+          done(err)
+        } else {
+          let telegramChatId = user.telegramToken
+          
+          let reminderMesssage = "Hello " + user.name + '\n'
+          reminderMesssage += 'It\'s time for your pill.\n\n'
+          reminderMesssage += pill.title + '\n'
+          reminderMesssage += (pill.description ? pill.description : '')
+          
+          if (pill.icon) {
+            telegramBot.sendPhoto(telegramChatId, pill.icon, { caption: reminderMessage })
+          } else {
+            telegramBot.sendMessage(telegramChatId, reminderMessage)
+          }
+          done()
+        }
+      })
+    }
+  })
 };
