@@ -76,7 +76,7 @@ module.exports = function(job, done) {
             methods: job.methods,
             token: savedToken.token
           }
-          queue.create('remind-remind', remindRemindDate).delay(remindersData.data).attempts(5).backoff(true).save(function (err) {
+          queue.create('remind-remind', remindRemindDate).delay(remindersData.date).attempts(5).backoff(true).save(function (err) {
             done (err)
           })
         }
