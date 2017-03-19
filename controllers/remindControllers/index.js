@@ -68,7 +68,7 @@ module.exports = function(job, done) {
             token: savedToken.token
           }
           job.data.methods.forEach(function (method){
-            queue.create(method, remindersData).delay(remindersData.date).attempts(5).backoff(true).save()
+            queue.create(method, remindersData).delay(0).attempts(5).backoff(true).save()
           })
           let remindRemindDate = {
             userId: job.data.userId,
