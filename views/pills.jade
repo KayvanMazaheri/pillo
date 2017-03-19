@@ -27,7 +27,7 @@ block content
               for pill, index in pills
                 tr
                   th(scope='row') (index+1)
-                  th: img.img-responsive.img-thumbnail(src= pill.icon)
+                  th: img.img-responsive.img-thumbnail.pill-icon(src= pill.icon)
                   th #{pill.title}
                   th #{pill.description}
                   th #{moment(pill.rule.currentDate).fromNow()}
