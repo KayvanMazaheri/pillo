@@ -123,6 +123,10 @@ module.exports = function(job, done) {
           done(err)
         } else {
           let telegramChatId = user.telegramToken
+          if(!telegramChatId) {
+            // telegram is not connected
+            done()
+          }
           
           let reminderMesssage = "Hello " + user.name + '\n'
           reminderMesssage += 'It\'s time for your pill.\n\n'
