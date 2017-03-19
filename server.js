@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var kue = require('kue');
 var mongoStore = require('connect-mongo')(session);
+var async = require('async')
 
 // Load environment variables from .env file
 dotenv.load();
@@ -105,5 +106,41 @@ if (app.get('env') === 'production') {
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+let gracefulExitHandler = function() {
+  async.series([
+    function(callback) {
+      mongoose.connection.close(function(err) {
+        if (err) {
+          console.log("mongoose disconnect error: ", err)
+          callback(err)
+        } else {
+          console.log("mongoose connection is disconnected through app termination.")
+          callback()
+        }
+      })
+    },
+    function(callback) {
+      queue.shutdown(5000, function(err) {
+        if (err) {
+          console.log("queue shutdown error: ", err)
+          callback(err)
+        } else {
+          console.log("kue is shut down through app termination.")
+        }
+      })
+    }
+  ],
+  function(error, results) {
+    if(err) {
+      console.log("graceful termination failed.")
+      process.exit(1)
+    } else {
+      process.exit(0)
+    }
+  })
+}
+
+process.once('SIGINT', gracefulExitHandler).once('SIGTERM', gracefulExitHandler);
 
 module.exports = app;
