@@ -72,7 +72,7 @@ exports.pillPost = function (req, res) {
         pillId: pill.id,
         methods: remindController.remindMethods
       }
-      queue.create('remind-remind', remindRemindDate).delay(pill.rule.currentDate).attempts(5).backoff(true).save(function(err) {
+      queue.create('remind-remind', remindRemindData).delay(pill.rule.currentDate).attempts(5).backoff(true).save(function(err) {
         if (err) {
           req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
         } 
