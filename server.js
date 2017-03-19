@@ -110,17 +110,6 @@ app.listen(app.get('port'), function() {
 let gracefulExitHandler = function() {
   async.series([
     function(callback) {
-      app.close(function(err) {
-        if (err) {
-          console.log("express server disconnect error: ", err)
-          callback(err)
-        } else {
-          console.log("express server is closed through app termination.")
-          callback()
-        }
-      })
-    },
-    function(callback) {
       mongoose.connection.close(function(err) {
         if (err) {
           console.log("mongoose disconnect error: ", err)
