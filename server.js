@@ -116,18 +116,18 @@ let gracefulExitHandler = function() {
           callback(err)
         } else {
           console.log("mongoose connection is disconnected through app termination.")
-          callback()
+          callback(null)
         }
       })
     },
     function(callback) {
-      queue.shutdown(function(err) {
+      queue.shutdown(5000, function(err) {
         if (err) {
           console.log("queue shutdown error: ", err)
           callback(err)
         } else {
           console.log("kue is shut down through app termination.")
-          callback()
+          callback(null)
         }
       })
     }
