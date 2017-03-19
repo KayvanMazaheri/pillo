@@ -141,6 +141,7 @@ let gracefulExitHandler = function() {
   })
 }
 
-process.once('SIGINT', gracefulExitHandler).once('SIGTERM', gracefulExitHandler);
+process.once('SIGINT', gracefulExitHandler)
+process.once('SIGTERM', gracefulExitHandler)
 
 module.exports = app;
