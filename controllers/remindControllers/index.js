@@ -11,7 +11,7 @@ module.exports = function(job, done) {
   // job.pillId;
   // job.methods;
   // job.token;
-  Pill.findById(job.pillId, (err, pill) => {
+  Pill.findById(job.data.pillId, (err, pill) => {
     if (err) {
       done(err)
     } else if (!pill) {
@@ -21,7 +21,7 @@ module.exports = function(job, done) {
     } else {
       async.waterfall([
         function(cb) {
-          Token.findOneAndRemove({ token: job.token, tokenType: 'pill' }, (err, removedToken) => {
+          Token.findOneAndRemove({ token: job.data.token, tokenType: 'pill' }, (err, removedToken) => {
             if(err) {
               cb(err)
             } else {
@@ -52,7 +52,7 @@ module.exports = function(job, done) {
               if (err) {
                 cb(err)
               } else {
-                cb(null, savedToken, savedPill)
+                cb(null, savedToken, updatedPill)
               }
             })
           }
@@ -67,13 +67,13 @@ module.exports = function(job, done) {
             date: savedPill.rule.currentDate,
             token: savedToken.token
           }
-          job.methods.forEach(function (method){
+          job.data.methods.forEach(function (method){
             queue.create(method, remindersData).delay(remindersData.date).attempts(5).backoff(true).save()
           })
           let remindRemindDate = {
-            userId: job.userId,
-            pillId: job.pillId,
-            methods: job.methods,
+            userId: job.data.userId,
+            pillId: job.data.pillId,
+            methods: job.data.methods,
             token: savedToken.token
           }
           queue.create('remind-remind', remindRemindDate).delay(remindersData.date).attempts(5).backoff(true).save(function (err) {

@@ -111,7 +111,7 @@ telegramBot.onText(/\/token/, function(req, match) {
 });
 
 module.exports = function(job, done) {
-  Pill.findById(job.pillId, function(err, pill) {
+  Pill.findById(job.data.pillId, function(err, pill) {
     if (err) {
       done(err)
     } else if (!pill){
@@ -128,10 +128,10 @@ module.exports = function(job, done) {
             done()
           }
           
-          let reminderMesssage = "Hello " + user.name + '\n'
-          reminderMesssage += 'It\'s time for your pill.\n\n'
-          reminderMesssage += pill.title + '\n'
-          reminderMesssage += (pill.description ? pill.description : '')
+          let reminderMessage = "Hello " + user.name + '\n'
+          reminderMessage += 'It\'s time for your pill.\n\n'
+          reminderMessage += pill.title + '\n'
+          reminderMessage += (pill.description ? pill.description : '')
           
           if (pill.icon) {
             telegramBot.sendPhoto(telegramChatId, pill.icon, { caption: reminderMessage })
