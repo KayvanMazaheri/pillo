@@ -109,14 +109,14 @@ block scripts
     $('#nextTime').pickatime();
     $("#icon").imagepicker();
   script.
-    let calculateUTC = function() {
-    const momentFormat = 'D MMMM, YYYY h:m A';
-    let startDateString = $('#startDate').val() + ' ' + $('#startTime').val();
-    let nextDateString = $('#nextDate').val() + ' ' + $('#nextTime').val();
-    let startUTC = moment(startDateString, momentFormat).utc()
-    let nextUTC = moment(nextDateString, momentFormat).utc()
-    $('#finalStartDate').val(startUTC.format())
-    $('#finalNextDate').val(nextUTC.format())
+    var calculateUTC = function() {
+    var momentFormat = 'D MMMM, YYYY h:m A';
+    var startDateString = $('#startDate').val() + ' ' + $('#startTime').val();
+    var nextDateString = $('#nextDate').val() + ' ' + $('#nextTime').val();
+    var startUTC = moment(startDateString, momentFormat).utc();
+    var nextUTC = moment(nextDateString, momentFormat).utc();
+    $('#finalStartDate').val(startUTC.format());
+    $('#finalNextDate').val(nextUTC.format());
     $('#addPillForm').submit()
     }
 
