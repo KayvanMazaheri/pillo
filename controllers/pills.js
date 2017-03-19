@@ -1,5 +1,9 @@
-var Moment = require('moment')
-var Pill = require('./../models/Pill')
+const Moment = require('moment')
+const kue = require('kue')
+const Pill = require('./../models/Pill')
+const remindController = require('./remind')
+
+let queue = kue.createQueue()
 
 /**
  * GET /pills
@@ -57,11 +61,23 @@ exports.pillPost = function (req, res) {
   pill.rule.startDate = startMoment.toDate()
   pill.rule.step = nextMoment - startMoment
  
-  pill.save(function (err) {
-    if (err)
+  pill.save(function (err, pill) {
+    if (err){
       req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
-    else
+      res.redirect('/pills') 
+    } else {
       req.flash('success', { msg: 'New pill added successfully.' });
-    res.redirect('/pills') 
+      let remindRemindData = {
+        userId: pill.userId,
+        pillId: pill.id,
+        methods: remindController.remindMethods
+      }
+      queue.create('remind-remind', remindRemindDate).delay(remindersData.data).attempts(5).backoff(true).save(function(err) {
+        if (err) {
+          req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+        } 
+        res.redirect('/pills') 
+      })
+    }
   })
 }
