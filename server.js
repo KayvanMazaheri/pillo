@@ -13,6 +13,8 @@ var passport = require('passport');
 var kue = require('kue');
 var mongoStore = require('connect-mongo')(session);
 var async = require('async')
+var basicAuth = require('basic-auth-connect');
+
 
 // Load environment variables from .env file
 dotenv.load();
@@ -94,6 +96,8 @@ app.get('/link/telegram/:token', userController.ensureAuthenticated, userControl
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }));
+
+app.use('/kue', basicAuth(process.env.KUE_WEB_USER, process.env.KUE_WEB_PASSWORD), kue.app);
 
 // Production error handler
 if (app.get('env') === 'production') {
