@@ -31,7 +31,6 @@ exports.pillPost = function (req, res) {
   let startMoment = new Moment(startDateString, momentFormat)
   let nextMoment = new Moment(nextDateString, momentFormat)
 
-
   let errors = []
   if (!req.body.title || req.body.title.length < 3)
     errors.push({ msg: 'Pill title must be at least 3 characters long.' })
@@ -41,7 +40,7 @@ exports.pillPost = function (req, res) {
       errors.push({ msg: 'Next Date/Time is invalid.' })
   if (nextMoment.isSameOrBefore(startMoment))
       errors.push({ msg: 'Next Date/Time must be after the Start Date/Time.' })
-  if(errors && errors.length) {
+  if(errors && errors.length > 0) {
       req.flash('error', errors)
       return res.redirect('/pills')
   }
@@ -53,10 +52,10 @@ exports.pillPost = function (req, res) {
   pill.icon = req.body.icon
   pill.rule.startDate = startMoment.toDate()
   pill.rule.step = nextMoment - startMoment
-  
+ 
   pill.save(function (err) {
     if (err)
-      errors.push({ msg: 'An error occured, contact system admin for more info.' })
+      req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
     else
       req.flash('success', { msg: 'New pill added successfully.' });
     res.redirect('/pills') 
