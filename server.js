@@ -110,6 +110,17 @@ app.listen(app.get('port'), function() {
 let gracefulExitHandler = function() {
   async.series([
     function(callback) {
+      app.close(function(err) {
+        if (err) {
+          console.log("express server disconnect error: ", err)
+          callback(err)
+        } else {
+          console.log("express server is closed through app termination.")
+          callback()
+        }
+      })
+    },
+    function(callback) {
       mongoose.connection.close(function(err) {
         if (err) {
           console.log("mongoose disconnect error: ", err)
@@ -121,7 +132,7 @@ let gracefulExitHandler = function() {
       })
     },
     function(callback) {
-      queue.shutdown(5000, function(err) {
+      queue.shutdown(function(err) {
         if (err) {
           console.log("queue shutdown error: ", err)
           callback(err)
@@ -134,7 +145,7 @@ let gracefulExitHandler = function() {
   function(error, results) {
     if(err) {
       console.log("graceful termination failed.")
-      process.exit(1)
+      process.exit()
     } else {
       process.exit(0)
     }
