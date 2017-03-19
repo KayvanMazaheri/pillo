@@ -24,11 +24,13 @@ var pillSchema = new mongoose.Schema({
     currentDate: Date,
     step: { type: Number, required: true, default: 1 * 60 * 60 * 1000 }
   },
-  history: { type: Array, required: true, default: [] }
+  history: { type: Array, default: [] }
 }, schemaOptions);
 
 pillSchema.virtual('rule.nextDate').get(function() {
   let nextDate = new Date();
+  if(!this.rule.currentDate)
+    this.rule.currentDate = this.rule.startDate;
   nextDate.setTime(this.rule.currentDate.getTime() + this.rule.step);
   return nextDate;
 });
