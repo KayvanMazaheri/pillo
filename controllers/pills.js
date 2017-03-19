@@ -25,11 +25,15 @@ exports.pillsGet = function(req, res) {
  * POST /pill
 */
 exports.pillPost = function (req, res) {
-  const momentFormat = 'D MMMM, YYYY h:m A'
-  let startDateString = req.body.startDate + ' ' + req.body.startTime
-  let nextDateString = req.body.nextDate + ' ' + req.body.nextTime
-  let startMoment = new Moment(startDateString, momentFormat)
-  let nextMoment = new Moment(nextDateString, momentFormat)
+//  const momentFormat = 'D MMMM, YYYY h:m A'
+//  let startDateString = req.body.startDate + ' ' + req.body.startTime
+//  let nextDateString = req.body.nextDate + ' ' + req.body.nextTime
+//  let startMoment = new Moment(startDateString, momentFormat)
+//  let nextMoment = new Moment(nextDateString, momentFormat)
+  let startDateString = req.body.startDateUTC
+  let nextDateString = req.body.nextDateUTC
+  let startMoment = new Moment.utc(startDateString)
+  let nextMoment = new Moment.utc(nextDateString)
 
   let errors = []
   if (!req.body.title || req.body.title.length < 3)

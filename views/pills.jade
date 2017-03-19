@@ -37,7 +37,7 @@ block content
 
     .panel
       .panel-body
-        form.form-horizontal(method='POST', action='/pill')
+        form#addPillForm.form-horizontal(method='POST', action='/pill')
           legend New Pill
           .form-group
             label.col-sm-3(for='title') Title
@@ -78,22 +78,24 @@ block content
           .form-group
             label.col-sm-3 Start Date
             .col-sm-7
-              input.form-control(type='text', name='startDate', id='startDate')
+              input.form-control(type='text', id='startDate')
+              input.form-control(type='hidden', id='finalStartDate', name='startDateUTC')
           .form-group
             label.col-sm-3 Start Time
             .col-sm-7
-              input.form-control(type='text', name='startTime', id='startTime')
+              input.form-control(type='text', id='startTime')
           .form-group
             label.col-sm-3 Next Date
             .col-sm-7
-              input.form-control(type='text', name='nextDate', id='nextDate')
+              input.form-control(type='text', id='nextDate')
+              input.form-control(type='hidden', id='finalNextDate', name='nextDateUTC')
           .form-group
             label.col-sm-3 Next Time
             .col-sm-7
-              input.form-control(type='text', name='nextTime', id='nextTime')
+              input.form-control(type='text', id='nextTime')
           .form-group
             .col-sm-4.col-sm-offset-3
-              button.btn.btn-success(type='submit') Add Pill
+              button.btn.btn-success(type='button', onclick='calculateUTC()') Add Pill
 block scripts
   script(src='/js/lib/image-picker/image-picker.js')
   script(src='/js/lib/pickadate/picker.js')
@@ -105,4 +107,16 @@ block scripts
     $('#nextDate').pickadate();
     $('#startTime').pickatime();
     $('#nextTime').pickatime();
-    $("#icon").imagepicker()
+    $("#icon").imagepicker();
+  script.
+    let calculateUTC = function() {
+    const momentFormat = 'D MMMM, YYYY h:m A';
+    let startDateString = $('#startDate').val() + ' ' + $('#startTime').val();
+    let nextDateString = $('#nextDate').val() + ' ' + $('#nextTime').val();
+    let startUTC = moment(startDateString, momentFormat).utc()
+    let nextUTC = moment(nextDateString, momentFormat).utc()
+    $('#finalStartDate').val(startUTC.format())
+    $('#finalNextDate').val(nextUTC.format())
+    $('#addPillForm').submit()
+    }
+
