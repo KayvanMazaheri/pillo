@@ -127,6 +127,7 @@ let gracefulExitHandler = function() {
           callback(err)
         } else {
           console.log("kue is shut down through app termination.")
+          callback()
         }
       })
     }
