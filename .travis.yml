@@ -6,9 +6,6 @@ node_js:
 services:
   - mongodb
   - redis-server
-env:
-  - MONGODB=mongodb://localhost:27017/pillo
-  - REDIS_URL=redis://localhost:6379
 before_script:
   - npm run build
   - sleep 15
