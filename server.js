@@ -14,7 +14,7 @@ var kue = require('kue');
 var mongoStore = require('connect-mongo')(session);
 var async = require('async')
 var basicAuth = require('basic-auth-connect');
-
+var favicon = require('serve-favicon');
 
 // Load environment variables from .env file
 dotenv.load();
@@ -52,6 +52,7 @@ app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 3000);
 app.use(compression());
 app.use(logger('dev'));
+app.use(favicon(path.join(__dirname, 'public', 'assets', 'image', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
