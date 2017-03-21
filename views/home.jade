@@ -16,10 +16,25 @@ block content
           div= info.msg
 
     .row
-      .col-xs-12.col-sm-12.col-md-offset-1.col-md-10
+      .col-xs-12.col-sm-12.col-md-offset-1.col-md-5
         .jumbotron
           img.img-responsive.center-block(src='/assets/image/pillo-logo.png')
           h1.text-center
             | Pillo
             br
             small Simple medication reminder
+
+      .col-xs-12.col-sm-12.col-md-5
+        .jumbotron
+          if announcements && announcements.danger
+            .alert.alert-danger(role='announcement')
+              h5 #{announcements.danger}
+          .alert.alert-info
+            h4.text-center Announcements
+            br
+            if announcements && announcements.changelog
+              ul
+                for line in announcements.changelog
+                  li
+                    strong #{line.date}
+                    |  #{line.msg}
