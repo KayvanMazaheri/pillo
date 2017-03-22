@@ -76,7 +76,8 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
-app.get('/pills', userController.ensureAuthenticated, pillController.pillsGet);
+app.get('/pill', userController.ensureAuthenticated, pillController.pillsGet);
+app.get('/pill/:id', userController.ensureAuthenticated, pillController.pillGet);
 app.post('/pill', userController.ensureAuthenticated, pillController.pillPost);
 app.get('/contact', contactController.contactGet);
 app.post('/contact', contactController.contactPost);

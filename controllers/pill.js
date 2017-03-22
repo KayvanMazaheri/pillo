@@ -6,7 +6,7 @@ const remindController = require('./remind')
 let queue = kue.createQueue()
 
 /**
- * GET /pills
+ * GET /pill
  */
 exports.pillsGet = function(req, res) {
   let renderData = {
@@ -60,11 +60,11 @@ exports.pillPost = function (req, res) {
   pill.icon = req.body.icon
   pill.rule.startDate = startMoment.toDate()
   pill.rule.step = nextMoment - startMoment
- 
+
   pill.save(function (err, pill) {
     if (err){
       req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
-      res.redirect('/pills') 
+      res.redirect('/pill')
     } else {
       req.flash('success', { msg: 'New pill added successfully.' });
       let remindRemindData = {
@@ -75,8 +75,8 @@ exports.pillPost = function (req, res) {
       queue.create('remind-remind', remindRemindData).delay(pill.rule.currentDate).attempts(5).backoff(true).save(function(err) {
         if (err) {
           req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
-        } 
-        res.redirect('/pills') 
+        }
+        res.redirect('/pill')
       })
     }
   })
