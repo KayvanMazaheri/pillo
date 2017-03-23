@@ -42,6 +42,25 @@ block content
                   option(data-img-src='/assets/image/icon/pill-3.png', data-img-alt='Pill #3', value='http://pillo.ir/assets/image/icon/pill-3.png') Pill #3
                   option(data-img-src='/assets/image/icon/pill-4.png', data-img-alt='Pill #4', value='http://pillo.ir/assets/image/icon/pill-4.png') Pill #4
           .form-group
+            label.col-sm-3  Reminding Methods
+            .col-sm-7
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-telegram')
+                  |  Telegram
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-push')
+                  |  Push Notifcation
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-sms')
+                  |  SMS
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-email')
+                  |  Email
+          .form-group
             .col-sm-4.col-sm-offset-3
               button.btn.btn-success(type='button', onClick='$("#editPillForm").submit();') Edit Pill
           .form-group

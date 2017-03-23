@@ -76,6 +76,25 @@ block content
 
           hr
           .form-group
+            label.col-sm-3  Reminding Methods
+            .col-sm-7
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-telegram')
+                  |  Telegram
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-push')
+                  |  Push Notifcation
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-sms')
+                  |  SMS
+              .checkbox
+                label
+                  input(type='checkbox', name='methods', value='remind-email')
+                  |  Email
+          .form-group
             label.col-sm-3 Start Date
             .col-sm-7
               input.form-control(type='text', id='startDate')
