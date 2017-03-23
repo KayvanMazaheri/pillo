@@ -29,7 +29,7 @@ var HomeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
 var remindController = require('./controllers/remind');
-var pillsController = require('./controllers/pills');
+var pillController = require('./controllers/pill');
 
 // Passport OAuth strategies
 require('./config/passport');
@@ -76,8 +76,11 @@ app.use(function(req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
-app.get('/pills', userController.ensureAuthenticated, pillsController.pillsGet);
-app.post('/pill', userController.ensureAuthenticated, pillsController.pillPost);
+app.get('/pill', userController.ensureAuthenticated, pillController.pillsGet);
+app.get('/pill/:id', userController.ensureAuthenticated, pillController.pillGet);
+app.put('/pill/:id', userController.ensureAuthenticated, pillController.pillPut);
+app.delete('/pill/:id', userController.ensureAuthenticated, pillController.pillDelete);
+app.post('/pill', userController.ensureAuthenticated, pillController.pillPost);
 app.get('/contact', contactController.contactGet);
 app.post('/contact', contactController.contactPost);
 app.get('/account', userController.ensureAuthenticated, userController.accountGet);

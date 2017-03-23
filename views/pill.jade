@@ -4,53 +4,21 @@ block content
   .container
     .panel
       .panel-body
-        if messages.success
-          .alert.alert-success(role='alert')
-            for success in messages.success
-              div= success.msg
-        if messages.error
-          .alert.alert-danger(role='alert')
-            for error in messages.error
-              div= error.msg
-
-        div.form-horizontal
-          legend Pills Information
-          table.table.table-striped
-            thead
-              tr
-                th #
-                th Icon
-                th Title
-                th Description
-                th Time
-            tbody
-              for pill, index in pills
-                tr
-                  th(scope='row') #{index+1}
-                  th: img.img-responsive.img-thumbnail.pill-icon(src= pill.icon)
-                  th: a(href='/pill/#{pill.id}') #{pill.title}
-                  th #{pill.description}
-                  th #{moment(pill.rule.currentDate).fromNow()}
-          unless pills && pills.length
-            .alert.alert-info(role='note')
-              p No Pills Available.
-
-    .panel
-      .panel-body
-        form#addPillForm.form-horizontal(method='POST', action='/pill')
-          legend New Pill
+        form#deletePillForm.form-horizontal(method='POST', action='/pill/#{pill.id}?_method=DELETE')
+        form#editPillForm.form-horizontal(method='POST', action='/pill/#{pill.id}?_method=PUT')
+          legend Edit #{pill.title}
           .form-group
             label.col-sm-3(for='title') Title
             .col-sm-7
-              input.form-control(type='text', name='title', id='title')
+              input.form-control(type='text', name='title', id='title', value='#{pill.title}')
           .form-group
             label.col-sm-3(for='description') Description
             .col-sm-7
-              input.form-control(type='text', name='description', id='description')
+              input.form-control(type='text', name='description', id='description', value='#{pill.description}')
           .form-group
             label.col-sm-3(for='icon') Icon
             .col-sm-7
-              select#icon.image-picker(name='icon')
+              select#icon.image-picker(name='icon', value='#{pill.icon}')
                 optgroup(label='Tablet')
                   option(data-img-src='/assets/image/icon/tablet-l-0.png', data-img-alt='Large Tablet #0', value='http://pillo.ir/assets/image/icon/tablet-l-0.png') Large Tablet #0
                   option(data-img-src='/assets/image/icon/tablet-l-1.png', data-img-alt='Large Tablet #1', value='http://pillo.ir/assets/image/icon/tablet-l-1.png') Large Tablet #1
@@ -73,8 +41,6 @@ block content
                   option(data-img-src='/assets/image/icon/pill-2.png', data-img-alt='Pill #2', value='http://pillo.ir/assets/image/icon/pill-2.png') Pill #2
                   option(data-img-src='/assets/image/icon/pill-3.png', data-img-alt='Pill #3', value='http://pillo.ir/assets/image/icon/pill-3.png') Pill #3
                   option(data-img-src='/assets/image/icon/pill-4.png', data-img-alt='Pill #4', value='http://pillo.ir/assets/image/icon/pill-4.png') Pill #4
-
-          hr
           .form-group
             label.col-sm-3  Reminding Methods
             .col-sm-7
@@ -95,46 +61,12 @@ block content
                   input(type='checkbox', name='methods', value='remind-email')
                   |  Email
           .form-group
-            label.col-sm-3 Start Date
-            .col-sm-7
-              input.form-control(type='text', id='startDate')
-              input.form-control(type='hidden', id='finalStartDate', name='startDateUTC')
-          .form-group
-            label.col-sm-3 Start Time
-            .col-sm-7
-              input.form-control(type='text', id='startTime')
-          .form-group
-            label.col-sm-3 Next Date
-            .col-sm-7
-              input.form-control(type='text', id='nextDate')
-              input.form-control(type='hidden', id='finalNextDate', name='nextDateUTC')
-          .form-group
-            label.col-sm-3 Next Time
-            .col-sm-7
-              input.form-control(type='text', id='nextTime')
+            .col-sm-4.col-sm-offset-3
+              button.btn.btn-success(type='button', onClick='$("#editPillForm").submit();') Edit Pill
           .form-group
             .col-sm-4.col-sm-offset-3
-              button.btn.btn-success(type='button', onclick='calculateUTC()') Add Pill
+              button.btn.btn-danger(type='button', onClick='$("#deletePillForm").submit();') Delete Pill
 block scripts
   script(src='/js/lib/image-picker/image-picker.js')
-  script(src='/js/lib/pickadate/picker.js')
-  script(src='/js/lib/pickadate/picker.date.js')
-  script(src='/js/lib/pickadate/picker.time.js')
-  script(src='/js/lib/pickadate/legacy.js')
   script.
-    $('#startDate').pickadate();
-    $('#nextDate').pickadate();
-    $('#startTime').pickatime();
-    $('#nextTime').pickatime();
     $("#icon").imagepicker();
-  script.
-    var calculateUTC = function() {
-    var momentFormat = 'D MMMM, YYYY h:m A';
-    var startDateString = $('#startDate').val() + ' ' + $('#startTime').val();
-    var nextDateString = $('#nextDate').val() + ' ' + $('#nextTime').val();
-    var startUTC = moment(startDateString, momentFormat).utc();
-    var nextUTC = moment(nextDateString, momentFormat).utc();
-    $('#finalStartDate').val(startUTC.format());
-    $('#finalNextDate').val(nextUTC.format());
-    $('#addPillForm').submit()
-    }
