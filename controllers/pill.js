@@ -39,6 +39,9 @@ exports.pillGet = function (req, res) {
     if (err) {
       req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
       res.redirect('/pill')
+    } else if (!pill) {
+      req.flash('error', { msg: 'Pill doesn\'t exist.' })
+      res.redirect('/pill')
     } else if (pill.userId != req.user.id) {
       req.flash('error', { msg: 'You are not authorized to view this page.' })
       res.redirect('/pill')
@@ -57,6 +60,9 @@ exports.pillDelete = function (req, res) {
   Pill.findById(pillId, function (err, pill) {
     if (err) {
       req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+      res.redirect('/pill')
+    } else if (!pill) {
+      req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
     } else if (pill.userId != req.user.id) {
       req.flash('error', { msg: 'You are not authorized to delete this pill.' })
