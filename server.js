@@ -78,6 +78,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', HomeController.index);
 app.get('/pill', userController.ensureAuthenticated, pillController.pillsGet);
 app.get('/pill/:id', userController.ensureAuthenticated, pillController.pillGet);
+app.delete('/pill/:id', userController.ensureAuthenticated, pillController.pillDelete);
 app.post('/pill', userController.ensureAuthenticated, pillController.pillPost);
 app.get('/contact', contactController.contactGet);
 app.post('/contact', contactController.contactPost);

@@ -26,6 +26,56 @@ exports.pillsGet = function(req, res) {
 }
 
 /**
+ * GET /pill/:id
+*/
+exports.pillGet = function (req, res) {
+  let renderData = {
+    title: 'Pills',
+    moment: Moment,
+    pill: null
+  }
+  let pillId = req.params.id
+  Pill.findById(pillId, function (err, pill) {
+    if (err) {
+      req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+      res.redirect('/pill')
+    } else if (pill.userId != req.user.id) {
+      req.flash('error', { msg: 'You are not authorized to view this page.' })
+      res.redirect('/pill')
+    } else {
+      renderData.pill = pill
+      res.render('pill', renderData)
+    }
+  })
+}
+
+/**
+ * DELETE /pill/:id
+*/
+exports.pillDelete = function (req, res) {
+  let pillId = req.params.id
+  Pill.findById(pillId, function (err, pill) {
+    if (err) {
+      req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+      res.redirect('/pill')
+    } else if (pill.userId != req.user.id) {
+      req.flash('error', { msg: 'You are not authorized to delete this pill.' })
+      res.redirect('/pill')
+    } else {
+      pill.remove(function (err) {
+        if (err) {
+          req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+          res.redirect('/pill')
+        } else {
+          req.flash('success', { msg: 'Your pill has been deleted.' });
+          res.redirect('/pill')
+        }
+      })
+    }
+  })
+}
+
+/**
  * POST /pill
 */
 exports.pillPost = function (req, res) {
