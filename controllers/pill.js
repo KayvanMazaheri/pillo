@@ -53,6 +53,48 @@ exports.pillGet = function (req, res) {
 }
 
 /**
+ * PUT /pill/:id
+*/
+exports.pillPut = function (req, res) {
+  let pillId = req.params.id
+
+  let errors = []
+  if (!req.body.title || req.body.title.length < 3)
+    errors.push({ msg: 'Pill title must be at least 3 characters long.' })
+  if(errors && errors.length > 0) {
+      req.flash('error', errors)
+      return res.redirect('/pills')
+  }
+
+  Pill.findById(pillId, function (err, pill) {
+    if (err) {
+      req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+      res.redirect('/pill')
+    } else if (!pill) {
+      req.flash('error', { msg: 'Pill doesn\'t exist.' })
+      res.redirect('/pill')
+    } else if (pill.userId != req.user.id) {
+      req.flash('error', { msg: 'You are not authorized to edit this pill.' })
+      res.redirect('/pill')
+    } else {
+      pill.title = req.body.title
+      pill.description = req.body.description
+      pill.icon = req.body.icon
+
+      pill.save(function (err) {
+        if (err) {
+          req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+          res.redirect('/pill')
+        } else {
+          req.flash('success', { msg: 'Pill has been updated.' });
+          res.redirect('/pill')
+        }
+      })
+    }
+  })
+}
+
+/**
  * DELETE /pill/:id
 */
 exports.pillDelete = function (req, res) {
@@ -73,7 +115,7 @@ exports.pillDelete = function (req, res) {
           req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
           res.redirect('/pill')
         } else {
-          req.flash('success', { msg: 'Your pill has been deleted.' });
+          req.flash('success', { msg: 'Pill has been deleted.' });
           res.redirect('/pill')
         }
       })
