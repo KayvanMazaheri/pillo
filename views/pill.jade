@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  .container
+    .panel
+      .panel-body
+        form#deletePillForm.form-horizontal(method='POST', action='/pill/#{pill.id}?_method=DELETE')
+        form#editPillForm.form-horizontal(method='POST', action='/pill/#{pill.id}?_method=PUT')
+          legend Edit #{pill.title}
+          .form-group
+            label.col-sm-3(for='title') Title
+            .col-sm-7
+              input.form-control(type='text', name='title', id='title', value='#{pill.title}')
+          .form-group
+            label.col-sm-3(for='description') Description
+            .col-sm-7
+              input.form-control(type='text', name='description', id='description', value='#{pill.description}')
+          .form-group
+            label.col-sm-3(for='icon') Icon
+            .col-sm-7
+              select#icon.image-picker(name='icon', value='#{pill.icon}')
+                optgroup(label='Tablet')
+                  option(data-img-src='/assets/image/icon/tablet-l-0.png', data-img-alt='Large Tablet #0', value='http://pillo.ir/assets/image/icon/tablet-l-0.png') Large Tablet #0
+                  option(data-img-src='/assets/image/icon/tablet-l-1.png', data-img-alt='Large Tablet #1', value='http://pillo.ir/assets/image/icon/tablet-l-1.png') Large Tablet #1
+                  option(data-img-src='/assets/image/icon/tablet-l-2.png', data-img-alt='Large Tablet #2', value='http://pillo.ir/assets/image/icon/tablet-l-2.png') Large Tablet #2
+                  option(data-img-src='/assets/image/icon/tablet-l-3.png', data-img-alt='Large Tablet #3', value='http://pillo.ir/assets/image/icon/tablet-l-3.png') Large Tablet #3
+                  option(data-img-src='/assets/image/icon/tablet-l-4.png', data-img-alt='Large Tablet #4', value='http://pillo.ir/assets/image/icon/tablet-l-4.png') Large Tablet #4
+                  //option(data-img-src='/assets/image/icon/tablet-m-0.png', data-img-alt='Medium Tablet #0', value='/assets/image/icon/tablet-m-0.png') Medium Tablet #0
+                  //option(data-img-src='/assets/image/icon/tablet-m-1.png', data-img-alt='Medium Tablet #1', value='/assets/image/icon/tablet-m-1.png') Medium Tablet #1
+                  //option(data-img-src='/assets/image/icon/tablet-m-2.png', data-img-alt='Medium Tablet #2', value='/assets/image/icon/tablet-m-2.png') Medium Tablet #2
+                  //option(data-img-src='/assets/image/icon/tablet-m-3.png', data-img-alt='Medium Tablet #3', value='/assets/image/icon/tablet-m-3.png') Medium Tablet #3
+                  //option(data-img-src='/assets/image/icon/tablet-m-4.png', data-img-alt='Medium Tablet #4', value='/assets/image/icon/tablet-m-4.png') Medium Tablet #4
+                  //option(data-img-src='/assets/image/icon/tablet-s-0.png', data-img-alt='Small Tablet #0', value='/assets/image/icon/tablet-s-0.png') Small Tablet #0
+                  //option(data-img-src='/assets/image/icon/tablet-s-1.png', data-img-alt='Small Tablet #1', value='/assets/image/icon/tablet-s-1.png') Small Tablet #1
+                  //option(data-img-src='/assets/image/icon/tablet-s-2.png', data-img-alt='Small Tablet #2', value='/assets/image/icon/tablet-s-2.png') Small Tablet #2
+                  //option(data-img-src='/assets/image/icon/tablet-s-3.png', data-img-alt='Small Tablet #3', value='/assets/image/icon/tablet-s-3.png') Small Tablet #3
+                  //option(data-img-src='/assets/image/icon/tablet-s-4.png', data-img-alt='Small Tablet #4', value='/assets/image/icon/tablet-s-4.png') Small Tablet #4
+                optgroup(label='Pill')
+                  option(data-img-src='/assets/image/icon/pill-0.png', data-img-alt='Pill #0', value='http://pillo.ir/assets/image/icon/pill-0.png') Pill #0
+                  option(data-img-src='/assets/image/icon/pill-1.png', data-img-alt='Pill #1', value='http://pillo.ir/assets/image/icon/pill-1.png') Pill #1
+                  option(data-img-src='/assets/image/icon/pill-2.png', data-img-alt='Pill #2', value='http://pillo.ir/assets/image/icon/pill-2.png') Pill #2
+                  option(data-img-src='/assets/image/icon/pill-3.png', data-img-alt='Pill #3', value='http://pillo.ir/assets/image/icon/pill-3.png') Pill #3
+                  option(data-img-src='/assets/image/icon/pill-4.png', data-img-alt='Pill #4', value='http://pillo.ir/assets/image/icon/pill-4.png') Pill #4
+          .form-group
+            .col-sm-4.col-sm-offset-3
+              button.btn.btn-success(type='button', onClick='$("#editPillForm").submit();') Edit Pill
+          .form-group
+            .col-sm-4.col-sm-offset-3
+              button.btn.btn-danger(type='button', onClick='$("#deletePillForm").submit();') Delete Pill
+block scripts
+  script(src='/js/lib/image-picker/image-picker.js')
+  script.
+    $("#icon").imagepicker();
