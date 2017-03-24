@@ -5,7 +5,7 @@ module.exports.createTransport = function () {
     service: 'SendPulse',
     auth: {
       user: process.env.SENDPULSE_USERNAME,
-      pass: process.env.SENDPULSE_PASSWORD
+      password: process.env.SENDPULSE_PASSWORD
     }
   })
 }
