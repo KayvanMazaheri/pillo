@@ -28,6 +28,7 @@ var queue = kue.createQueue({
 var HomeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
+var aboutController = require('./controllers/about');
 var remindController = require('./controllers/remind');
 var pillController = require('./controllers/pill');
 
@@ -81,6 +82,7 @@ app.get('/pill/:id', userController.ensureAuthenticated, pillController.pillGet)
 app.put('/pill/:id', userController.ensureAuthenticated, pillController.pillPut);
 app.delete('/pill/:id', userController.ensureAuthenticated, pillController.pillDelete);
 app.post('/pill', userController.ensureAuthenticated, pillController.pillPost);
+app.get('/about', aboutController.aboutGet);
 app.get('/contact', contactController.contactGet);
 app.post('/contact', contactController.contactPost);
 app.get('/account', userController.ensureAuthenticated, userController.accountGet);
