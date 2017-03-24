@@ -2,10 +2,10 @@ let nodemailer = require('nodemailer')
 
 module.exports.createTransport = function () {
   return nodemailer.createTransport({
-    service: 'SendPulse',
+    service: 'Postmark',
     auth: {
-      user: process.env.SENDPULSE_USERNAME,
-      password: process.env.SENDPULSE_PASSWORD
+      user: process.env.POSTMARK_API_TOKEN,
+      pass: process.env.POSTMARK_API_TOKEN
     }
   })
 }
