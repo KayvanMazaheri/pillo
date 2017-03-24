@@ -29,8 +29,8 @@ exports.contactPost = function(req, res) {
 
   var mailOptions = {
     from: req.body.name + ' ' + '<'+ req.body.email + '>',
-    to: 'your@email.com',
-    subject: '✔ Contact Form | Mega Boilerplate',
+    to: 'KayvanMazaheri@GMail.com',
+    subject: '✔ Contact Form | Pillo',
     text: req.body.message
   };
 
