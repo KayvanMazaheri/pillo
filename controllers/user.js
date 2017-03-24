@@ -1,6 +1,6 @@
 var async = require('async');
 var crypto = require('crypto');
-var nodemailer = require('nodemailer');
+var nodemailer = require('./../config/nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
 var Token = require('../models/Token');
@@ -254,13 +254,7 @@ exports.forgotPost = function(req, res, next) {
       });
     },
     function(token, user, done) {
-      var transporter = nodemailer.createTransport({
-        service: 'Mailgun',
-        auth: {
-          user: process.env.MAILGUN_USERNAME,
-          pass: process.env.MAILGUN_PASSWORD
-        }
-      });
+      var transporter = nodemailer.createTransport();
       var mailOptions = {
         to: user.email,
         from: 'support@yourdomain.com',
@@ -332,13 +326,7 @@ exports.resetPost = function(req, res, next) {
         });
     },
     function(user, done) {
-      var transporter = nodemailer.createTransport({
-        service: 'Mailgun',
-        auth: {
-          user: process.env.MAILGUN_USERNAME,
-          pass: process.env.MAILGUN_PASSWORD
-        }
-      });
+      var transporter = nodemailer.createTransport();
       var mailOptions = {
         from: 'support@yourdomain.com',
         to: user.email,

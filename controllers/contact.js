@@ -1,11 +1,5 @@
-var nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport({
-  service: 'Mailgun',
-  auth: {
-    user: process.env.MAILGUN_USERNAME,
-    pass: process.env.MAILGUN_PASSWORD
-  }
-});
+var nodemailer = require('./../config/nodemailer');
+var transporter = nodemailer.createTransport();
 
 /**
  * GET /contact
