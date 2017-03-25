@@ -8,7 +8,7 @@ let queue = kue.createQueue()
 /**
  * GET /pill
  */
-exports.pillsGet = function(req, res) {
+exports.pillsGet = function (req, res) {
   let renderData = {
     title: 'Pills',
     moment: Moment,
@@ -16,8 +16,8 @@ exports.pillsGet = function(req, res) {
   }
   Pill.find({ userId: req.user.id }, function (err, pills) {
     if (err) {
-        req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
-        res.render('pills', renderData)
+      req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+      res.render('pills', renderData)
     } else {
       renderData.pills = pills
       res.render('pills', renderData)
@@ -42,7 +42,7 @@ exports.pillGet = function (req, res) {
     } else if (!pill) {
       req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
-    } else if (pill.userId != req.user.id) {
+    } else if (pill.userId !== req.user.id) {
       req.flash('error', { msg: 'You are not authorized to view this page.' })
       res.redirect('/pill')
     } else {
@@ -59,11 +59,10 @@ exports.pillPut = function (req, res) {
   let pillId = req.params.id
 
   let errors = []
-  if (!req.body.title || req.body.title.length < 3)
-    errors.push({ msg: 'Pill title must be at least 3 characters long.' })
-  if(errors && errors.length > 0) {
-      req.flash('error', errors)
-      return res.redirect('/pills')
+  if (!req.body.title || req.body.title.length < 3) { errors.push({ msg: 'Pill title must be at least 3 characters long.' }) }
+  if (errors && errors.length > 0) {
+    req.flash('error', errors)
+    return res.redirect('/pills')
   }
 
   Pill.findById(pillId, function (err, pill) {
@@ -73,7 +72,7 @@ exports.pillPut = function (req, res) {
     } else if (!pill) {
       req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
-    } else if (pill.userId != req.user.id) {
+    } else if (pill.userId !== req.user.id) {
       req.flash('error', { msg: 'You are not authorized to edit this pill.' })
       res.redirect('/pill')
     } else {
@@ -86,7 +85,7 @@ exports.pillPut = function (req, res) {
           req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
           res.redirect('/pill')
         } else {
-          req.flash('success', { msg: 'Pill has been updated.' });
+          req.flash('success', { msg: 'Pill has been updated.' })
           res.redirect('/pill')
         }
       })
@@ -106,7 +105,7 @@ exports.pillDelete = function (req, res) {
     } else if (!pill) {
       req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
-    } else if (pill.userId != req.user.id) {
+    } else if (pill.userId !== req.user.id) {
       req.flash('error', { msg: 'You are not authorized to delete this pill.' })
       res.redirect('/pill')
     } else {
@@ -115,7 +114,7 @@ exports.pillDelete = function (req, res) {
           req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
           res.redirect('/pill')
         } else {
-          req.flash('success', { msg: 'Pill has been deleted.' });
+          req.flash('success', { msg: 'Pill has been deleted.' })
           res.redirect('/pill')
         }
       })
@@ -134,21 +133,17 @@ exports.pillPost = function (req, res) {
 //  let nextMoment = new Moment(nextDateString, momentFormat)
   let startDateString = req.body.startDateUTC
   let nextDateString = req.body.nextDateUTC
-  let startMoment = new Moment.utc(startDateString)
-  let nextMoment = new Moment.utc(nextDateString)
+  let startMoment = Moment.utc(startDateString)
+  let nextMoment = Moment.utc(nextDateString)
 
   let errors = []
-  if (!req.body.title || req.body.title.length < 3)
-    errors.push({ msg: 'Pill title must be at least 3 characters long.' })
-  if (!startMoment.isValid())
-      errors.push({ msg: 'Start Date/Time is invalid.' })
-  if (!nextMoment.isValid())
-      errors.push({ msg: 'Next Date/Time is invalid.' })
-  if (nextMoment.isSameOrBefore(startMoment))
-      errors.push({ msg: 'Next Date/Time must be after the Start Date/Time.' })
-  if(errors && errors.length > 0) {
-      req.flash('error', errors)
-      return res.redirect('/pills')
+  if (!req.body.title || req.body.title.length < 3) { errors.push({ msg: 'Pill title must be at least 3 characters long.' }) }
+  if (!startMoment.isValid()) { errors.push({ msg: 'Start Date/Time is invalid.' }) }
+  if (!nextMoment.isValid()) { errors.push({ msg: 'Next Date/Time is invalid.' }) }
+  if (nextMoment.isSameOrBefore(startMoment)) { errors.push({ msg: 'Next Date/Time must be after the Start Date/Time.' }) }
+  if (errors && errors.length > 0) {
+    req.flash('error', errors)
+    return res.redirect('/pills')
   }
 
   let pill = new Pill()
@@ -160,17 +155,17 @@ exports.pillPost = function (req, res) {
   pill.rule.step = nextMoment - startMoment
 
   pill.save(function (err, pill) {
-    if (err){
+    if (err) {
       req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
       res.redirect('/pill')
     } else {
-      req.flash('success', { msg: 'New pill added successfully.' });
+      req.flash('success', { msg: 'New pill added successfully.' })
       let remindRemindData = {
         userId: pill.userId,
         pillId: pill.id,
         methods: remindController.remindMethods
       }
-      queue.create('remind-remind', remindRemindData).delay(pill.rule.currentDate).attempts(5).backoff(true).save(function(err) {
+      queue.create('remind-remind', remindRemindData).delay(pill.rule.currentDate).attempts(5).backoff(true).save(function (err) {
         if (err) {
           req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
         }

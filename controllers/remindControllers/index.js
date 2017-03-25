@@ -1,12 +1,12 @@
 const kue = require('kue')
-const async = require('async');
+const async = require('async')
 const crypto = require('crypto')
 const Pill = require('./../../models/Pill')
 const Token = require('./../../models/Token')
 let queue = kue.createQueue()
 
 // remind-remind
-module.exports = function(job, done) {
+module.exports = function (job, done) {
   // job.userId;
   // job.pillId;
   // job.methods;
@@ -20,45 +20,45 @@ module.exports = function(job, done) {
       done()
     } else {
       async.waterfall([
-        function(cb) {
+        function (cb) {
           Token.findOneAndRemove({ token: job.data.token, tokenType: 'pill' }, (err, removedToken) => {
-            if(err) {
+            if (err) {
               cb(err)
             } else {
               cb()
             }
           })
         },
-        function(cb) {
-          crypto.randomBytes(16, function(err, buf) {
-            var token = buf.toString('hex');
-            cb(err, token);
+        function (cb) {
+          crypto.randomBytes(16, function (err, buf) {
+            var token = buf.toString('hex')
+            cb(err, token)
           })
         },
-      function(tokenString, cb) {
-        let token = new Token()
-        token.token = tokenString
-        token.type = 'pill'
-        token.data = {
-          pillId: pill.id
-        }
-
-        pill.tookOne(function (err, updatedPill) {
-          if(err) {
-            cb(err)
-          } else {
-            token.expires = updatedPill.rule.currentDate
-            token.save(function (err, savedToken) {
-              if (err) {
-                cb(err)
-              } else {
-                cb(null, savedToken, updatedPill)
-              }
-            })
+        function (tokenString, cb) {
+          let token = new Token()
+          token.token = tokenString
+          token.type = 'pill'
+          token.data = {
+            pillId: pill.id
           }
-        })
-      }],
-      function(err, savedToken, savedPill) {
+
+          pill.tookOne(function (err, updatedPill) {
+            if (err) {
+              cb(err)
+            } else {
+              token.expires = updatedPill.rule.currentDate
+              token.save(function (err, savedToken) {
+                if (err) {
+                  cb(err)
+                } else {
+                  cb(null, savedToken, updatedPill)
+                }
+              })
+            }
+          })
+        }],
+      function (err, savedToken, savedPill) {
         if (err) {
           done(err)
         } else {
@@ -67,7 +67,7 @@ module.exports = function(job, done) {
             date: savedPill.rule.currentDate,
             token: savedToken.token
           }
-          job.data.methods.forEach(function (method){
+          job.data.methods.forEach(function (method) {
             queue.create(method, remindersData).delay(0).attempts(5).backoff(true).save()
           })
           let remindRemindDate = {
@@ -77,7 +77,7 @@ module.exports = function(job, done) {
             token: savedToken.token
           }
           queue.create('remind-remind', remindRemindDate).delay(remindersData.date).attempts(5).backoff(true).save(function (err) {
-            done (err)
+            done(err)
           })
         }
       })
