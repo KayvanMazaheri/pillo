@@ -9,7 +9,6 @@ let queue = kue.createQueue()
 module.exports = function (job, done) {
   // job.userId;
   // job.pillId;
-  // job.methods;
   // job.token;
   Pill.findById(job.data.pillId, (err, pill) => {
     if (err) {
@@ -67,13 +66,12 @@ module.exports = function (job, done) {
             date: savedPill.rule.currentDate,
             token: savedToken.token
           }
-          job.data.methods.forEach(function (method) {
+          pill.methods.forEach(function (method) {
             queue.create(method, remindersData).delay(0).attempts(5).backoff(true).save()
           })
           let remindRemindDate = {
             userId: job.data.userId,
             pillId: job.data.pillId,
-            methods: job.data.methods,
             token: savedToken.token
           }
           queue.create('remind-remind', remindRemindDate).delay(remindersData.date).attempts(5).backoff(true).save(function (err) {

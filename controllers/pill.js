@@ -1,7 +1,6 @@
 const Moment = require('moment')
 const kue = require('kue')
 const Pill = require('./../models/Pill')
-const remindController = require('./remind')
 
 let queue = kue.createQueue()
 
@@ -78,7 +77,12 @@ exports.pillPut = function (req, res) {
     } else {
       pill.title = req.body.title
       pill.description = req.body.description
-      pill.icon = req.body.icon
+      if (req.body.icon && req.body.icon.length > 0) {
+        pill.icon = req.body.icon
+      }
+      if (req.body.methods && req.body.methods.length > 0) {
+        pill.methods = req.body.methods
+      }
 
       pill.save(function (err) {
         if (err) {
@@ -138,6 +142,7 @@ exports.pillPost = function (req, res) {
 
   let errors = []
   if (!req.body.title || req.body.title.length < 3) { errors.push({ msg: 'Pill title must be at least 3 characters long.' }) }
+  if (!req.body.methods || req.body.methods.length < 1) { errors.push({ msg: 'Should choose at least 1 reminding method.' }) }
   if (!startMoment.isValid()) { errors.push({ msg: 'Start Date/Time is invalid.' }) }
   if (!nextMoment.isValid()) { errors.push({ msg: 'Next Date/Time is invalid.' }) }
   if (nextMoment.isSameOrBefore(startMoment)) { errors.push({ msg: 'Next Date/Time must be after the Start Date/Time.' }) }
@@ -151,6 +156,7 @@ exports.pillPost = function (req, res) {
   pill.title = req.body.title
   pill.description = req.body.description
   pill.icon = req.body.icon
+  pill.methods = req.body.methods
   pill.rule.startDate = startMoment.toDate()
   pill.rule.step = nextMoment - startMoment
 
@@ -162,8 +168,7 @@ exports.pillPost = function (req, res) {
       req.flash('success', { msg: 'New pill added successfully.' })
       let remindRemindData = {
         userId: pill.userId,
-        pillId: pill.id,
-        methods: remindController.remindMethods
+        pillId: pill.id
       }
       queue.create('remind-remind', remindRemindData).delay(pill.rule.currentDate).attempts(5).backoff(true).save(function (err) {
         if (err) {
