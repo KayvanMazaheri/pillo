@@ -9,7 +9,7 @@
     "postinstall": "npm run build",
     "start": "node server.js",
     "start:production": "pm2 start server.js -i 4",
-    "test": "mocha",
+    "test": "standard && mocha",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "nodemon -e less -w public/css -x npm run build:css"
   },
@@ -47,7 +47,13 @@
     "mocha": "^2.4.5",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
+    "standard": "^9.0.2",
     "supertest": "^1.2.0"
+  },
+  "standard": {
+    "ignore": [
+      "/public/js/"
+    ]
   },
   "engines": {
     "node": "6.1.0"
