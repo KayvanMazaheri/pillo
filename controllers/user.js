@@ -1,260 +1,299 @@
-var async = require('async');
-var crypto = require('crypto');
-var nodemailer = require('./../config/nodemailer');
-var passport = require('passport');
-var User = require('../models/User');
-var Token = require('../models/Token');
+var async = require('async')
+var crypto = require('crypto')
+var nodemailer = require('./../config/nodemailer')
+var passport = require('passport')
+var User = require('../models/User')
+var Token = require('../models/Token')
 
 /**
  * Login required middleware
  */
-exports.ensureAuthenticated = function(req, res, next) {
+exports.ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) {
-    next();
+    next()
   } else {
-    res.redirect('/login');
+    res.redirect('/login')
   }
-};
+}
 
 /**
  * GET /login
  */
-exports.loginGet = function(req, res) {
+exports.loginGet = function (req, res) {
   if (req.user) {
-    return res.redirect('/');
+    return res.redirect('/')
   }
   res.render('account/login', {
     title: 'Log in'
-  });
-};
+  })
+}
 
 /**
  * POST /login
  */
-exports.loginPost = function(req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('email', 'Email cannot be blank').notEmpty();
-  req.assert('password', 'Password cannot be blank').notEmpty();
-  req.sanitize('email').normalizeEmail({ remove_dots: false });
+exports.loginPost = function (req, res, next) {
+  req.assert('email', 'Email is not valid').isEmail()
+  req.assert('email', 'Email cannot be blank').notEmpty()
+  req.assert('password', 'Password cannot be blank').notEmpty()
+  req.sanitize('email').normalizeEmail({ remove_dots: false })
 
-  var errors = req.validationErrors();
+  var errors = req.validationErrors()
 
   if (errors) {
-    req.flash('error', errors);
-    return res.redirect('/login');
+    req.flash('error', errors)
+    return res.redirect('/login')
   }
 
-  passport.authenticate('local', function(err, user, info) {
-    if (!user) {
-      req.flash('error', info);
+  passport.authenticate('local', function (err, user, info) {
+    if (err) {
+      req.flash('error', err)
+      return res.redirect('/login')
+    } else if (!user) {
+      req.flash('error', info)
       return res.redirect('/login')
     }
-    req.logIn(user, function(err) {
-      res.redirect('/');
-    });
-  })(req, res, next);
-};
+    req.logIn(user, function (err) {
+      if (err) {
+        req.flash('error', err)
+      }
+      res.redirect('/')
+    })
+  })(req, res, next)
+}
 
 /**
  * GET /logout
  */
-exports.logout = function(req, res) {
-  req.logout();
-  res.redirect('/');
-};
+exports.logout = function (req, res) {
+  req.logout()
+  res.redirect('/')
+}
 
 /**
  * GET /signup
  */
-exports.signupGet = function(req, res) {
+exports.signupGet = function (req, res) {
   if (req.user) {
-    return res.redirect('/');
+    return res.redirect('/')
   }
   res.render('account/signup', {
     title: 'Sign up'
-  });
-};
+  })
+}
 
 /**
  * POST /signup
  */
-exports.signupPost = function(req, res, next) {
-  req.assert('name', 'Name cannot be blank').notEmpty();
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('email', 'Email cannot be blank').notEmpty();
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.sanitize('email').normalizeEmail({ remove_dots: false });
+exports.signupPost = function (req, res, next) {
+  req.assert('name', 'Name cannot be blank').notEmpty()
+  req.assert('email', 'Email is not valid').isEmail()
+  req.assert('email', 'Email cannot be blank').notEmpty()
+  req.assert('password', 'Password must be at least 4 characters long').len(4)
+  req.sanitize('email').normalizeEmail({ remove_dots: false })
 
-  var errors = req.validationErrors();
+  var errors = req.validationErrors()
 
   if (errors) {
-    req.flash('error', errors);
-    return res.redirect('/signup');
+    req.flash('error', errors)
+    return res.redirect('/signup')
   }
 
-  User.findOne({ email: req.body.email }, function(err, user) {
-    if (user) {
-      req.flash('error', { msg: 'The email address you have entered is already associated with another account.' });
-      return res.redirect('/signup');
+  User.findOne({ email: req.body.email }, function (err, user) {
+    if (err) {
+      req.flash('error', err)
+      return res.redirect('/signup')
+    } else if (user) {
+      req.flash('error', { msg: 'The email address you have entered is already associated with another account.' })
+      return res.redirect('/signup')
     }
     user = new User({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password
-    });
-    user.save(function(err) {
-      req.logIn(user, function(err) {
-        res.redirect('/');
-      });
-    });
-  });
-};
+    })
+    user.save(function (err) {
+      if (err) {
+        req.flash('error', err)
+      }
+      req.logIn(user, function (err) {
+        if (err) {
+          req.flash('error', err)
+        }
+        res.redirect('/')
+      })
+    })
+  })
+}
 
 /**
  * GET /account
  */
-exports.accountGet = function(req, res) {
+exports.accountGet = function (req, res) {
   res.render('account/profile', {
     title: 'My Account'
-  });
-};
+  })
+}
 
 /**
  * PUT /account
  * Update profile information OR change password.
  */
-exports.accountPut = function(req, res, next) {
+exports.accountPut = function (req, res, next) {
   if ('password' in req.body) {
-    req.assert('password', 'Password must be at least 4 characters long').len(4);
-    req.assert('confirm', 'Passwords must match').equals(req.body.password);
+    req.assert('password', 'Password must be at least 4 characters long').len(4)
+    req.assert('confirm', 'Passwords must match').equals(req.body.password)
   } else {
-    req.assert('email', 'Email is not valid').isEmail();
-    req.assert('email', 'Email cannot be blank').notEmpty();
-    req.sanitize('email').normalizeEmail({ remove_dots: false });
+    req.assert('email', 'Email is not valid').isEmail()
+    req.assert('email', 'Email cannot be blank').notEmpty()
+    req.sanitize('email').normalizeEmail({ remove_dots: false })
   }
 
-  var errors = req.validationErrors();
+  var errors = req.validationErrors()
 
   if (errors) {
-    req.flash('error', errors);
-    return res.redirect('/account');
+    req.flash('error', errors)
+    return res.redirect('/account')
   }
 
-  User.findById(req.user.id, function(err, user) {
-    if ('password' in req.body) {
-      user.password = req.body.password;
-    } else {
-      user.email = req.body.email;
-      user.name = req.body.name;
-      user.gender = req.body.gender;
-      user.location = req.body.location;
-      user.website = req.body.website;
+  User.findById(req.user.id, function (err, user) {
+    if (err) {
+      req.flash('error', { msg: err })
+      return res.redirect('/account')
     }
-    user.save(function(err) {
-      if ('password' in req.body) {
-        req.flash('success', { msg: 'Your password has been changed.' });
-      } else if (err && err.code === 11000) {
-        req.flash('error', { msg: 'The email address you have entered is already associated with another account.' });
-      } else {
-        req.flash('success', { msg: 'Your profile information has been updated.' });
+    if ('password' in req.body) {
+      user.password = req.body.password
+    } else {
+      user.email = req.body.email
+      user.name = req.body.name
+      user.gender = req.body.gender
+      user.location = req.body.location
+      user.website = req.body.website
+    }
+    user.save(function (err) {
+      if (err) {
+        req.flash('error', { msg: err })
+        return res.redirect('/account')
       }
-      res.redirect('/account');
-    });
-  });
-};
+
+      if ('password' in req.body) {
+        req.flash('success', { msg: 'Your password has been changed.' })
+      } else if (err && err.code === 11000) {
+        req.flash('error', { msg: 'The email address you have entered is already associated with another account.' })
+      } else {
+        req.flash('success', { msg: 'Your profile information has been updated.' })
+      }
+      res.redirect('/account')
+    })
+  })
+}
 
 /**
  * DELETE /account
  */
-exports.accountDelete = function(req, res, next) {
-  User.remove({ _id: req.user.id }, function(err) {
-    req.logout();
-    req.flash('info', { msg: 'Your account has been permanently deleted.' });
-    res.redirect('/');
-  });
-};
+exports.accountDelete = function (req, res, next) {
+  User.remove({ _id: req.user.id }, function (err) {
+    if (err) {
+      req.flash('error', { msg: err })
+      return res.redirect('/')
+    }
+
+    req.logout()
+    req.flash('info', { msg: 'Your account has been permanently deleted.' })
+    res.redirect('/')
+  })
+}
 
 /**
  * GET /unlink/:provider
  */
-exports.unlink = function(req, res, next) {
-  User.findById(req.user.id, function(err, user) {
+exports.unlink = function (req, res, next) {
+  User.findById(req.user.id, function (err, user) {
+    if (err) {
+      req.flash('error', { msg: err })
+      return res.redirect('/account')
+    }
     switch (req.params.provider) {
       case 'facebook':
-        user.facebook = undefined;
-        break;
+        user.facebook = undefined
+        break
       case 'google':
-        user.google = undefined;
-        break;
+        user.google = undefined
+        break
       case 'twitter':
-        user.twitter = undefined;
-        break;
+        user.twitter = undefined
+        break
       case 'vk':
-        user.vk = undefined;
-        break;
+        user.vk = undefined
+        break
       case 'github':
-          user.github = undefined;
-        break;
+        user.github = undefined
+        break
       default:
-        req.flash('error', { msg: 'Invalid OAuth Provider' });
-        return res.redirect('/account');
+        req.flash('error', { msg: 'Invalid OAuth Provider' })
+        return res.redirect('/account')
     }
-    user.save(function(err) {
-      req.flash('success', { msg: 'Your account has been unlinked.' });
-      res.redirect('/account');
-    });
-  });
-};
+    user.save(function (err) {
+      if (err) {
+        req.flash('error', { msg: err })
+      } else {
+        req.flash('success', { msg: 'Your account has been unlinked.' })
+      }
+      res.redirect('/account')
+    })
+  })
+}
 
 /**
  * GET /forgot
  */
-exports.forgotGet = function(req, res) {
+exports.forgotGet = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect('/');
+    return res.redirect('/')
   }
   res.render('account/forgot', {
     title: 'Forgot Password'
-  });
-};
+  })
+}
 
 /**
  * POST /forgot
  */
-exports.forgotPost = function(req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('email', 'Email cannot be blank').notEmpty();
-  req.sanitize('email').normalizeEmail({ remove_dots: false });
+exports.forgotPost = function (req, res, next) {
+  req.assert('email', 'Email is not valid').isEmail()
+  req.assert('email', 'Email cannot be blank').notEmpty()
+  req.sanitize('email').normalizeEmail({ remove_dots: false })
 
-  var errors = req.validationErrors();
+  var errors = req.validationErrors()
 
   if (errors) {
-    req.flash('error', errors);
-    return res.redirect('/forgot');
+    req.flash('error', errors)
+    return res.redirect('/forgot')
   }
 
   async.waterfall([
-    function(done) {
-      crypto.randomBytes(16, function(err, buf) {
-        var token = buf.toString('hex');
-        done(err, token);
-      });
+    function (done) {
+      crypto.randomBytes(16, function (err, buf) {
+        var token = buf.toString('hex')
+        done(err, token)
+      })
     },
-    function(token, done) {
-      User.findOne({ email: req.body.email }, function(err, user) {
-        if (!user) {
-          req.flash('error', { msg: 'The email address ' + req.body.email + ' is not associated with any account.' });
-          return res.redirect('/forgot');
+    function (token, done) {
+      User.findOne({ email: req.body.email }, function (err, user) {
+        if (err) {
+          done(err)
+        } else if (!user) {
+          req.flash('error', { msg: 'The email address ' + req.body.email + ' is not associated with any account.' })
+          return res.redirect('/forgot')
         }
-        user.passwordResetToken = token;
-        user.passwordResetExpires = Date.now() + 3600000; // expire in 1 hour
-        user.save(function(err) {
-          done(err, token, user);
-        });
-      });
+        user.passwordResetToken = token
+        user.passwordResetExpires = Date.now() + 3600000 // expire in 1 hour
+        user.save(function (err) {
+          done(err, token, user)
+        })
+      })
     },
-    function(token, user, done) {
-      var transporter = nodemailer.createTransport();
+    function (token, user, done) {
+      var transporter = nodemailer.createTransport()
       var mailOptions = {
         to: user.email,
         from: 'support@pillo.ir',
@@ -263,142 +302,172 @@ exports.forgotPost = function(req, res, next) {
         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
         'http://' + req.headers.host + '/reset/' + token + '\n\n' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-      };
-      transporter.sendMail(mailOptions, function(err) {
-        req.flash('info', { msg: 'An email has been sent to ' + user.email + ' with further instructions.' });
-        res.redirect('/forgot');
-      });
+      }
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+          req.flash('error', { msg: err })
+        } else {
+          req.flash('info', { msg: 'An email has been sent to ' + user.email + ' with further instructions.' })
+        }
+        res.redirect('/forgot')
+      })
     }
-  ]);
-};
+  ])
+}
 
 /**
  * GET /reset
  */
-exports.resetGet = function(req, res) {
+exports.resetGet = function (req, res) {
   if (req.isAuthenticated()) {
-    return res.redirect('/');
+    return res.redirect('/')
   }
   User.findOne({ passwordResetToken: req.params.token })
     .where('passwordResetExpires').gt(Date.now())
-    .exec(function(err, user) {
-      if (!user) {
-        req.flash('error', { msg: 'Password reset token is invalid or has expired.' });
-        return res.redirect('/forgot');
+    .exec(function (err, user) {
+      if (err) {
+        req.flash('error', { msg: err })
+        return res.redirect('/forgot')
+      } else if (!user) {
+        req.flash('error', { msg: 'Password reset token is invalid or has expired.' })
+        return res.redirect('/forgot')
       }
       res.render('account/reset', {
         title: 'Password Reset'
-      });
-    });
-};
+      })
+    })
+}
 
 /**
  * POST /reset
  */
-exports.resetPost = function(req, res, next) {
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirm', 'Passwords must match').equals(req.body.password);
+exports.resetPost = function (req, res, next) {
+  req.assert('password', 'Password must be at least 4 characters long').len(4)
+  req.assert('confirm', 'Passwords must match').equals(req.body.password)
 
-  var errors = req.validationErrors();
+  var errors = req.validationErrors()
 
   if (errors) {
-    req.flash('error', errors);
-    return res.redirect('back');
+    req.flash('error', errors)
+    return res.redirect('back')
   }
 
   async.waterfall([
-    function(done) {
+    function (done) {
       User.findOne({ passwordResetToken: req.params.token })
         .where('passwordResetExpires').gt(Date.now())
-        .exec(function(err, user) {
-          if (!user) {
-            req.flash('error', { msg: 'Password reset token is invalid or has expired.' });
-            return res.redirect('back');
+        .exec(function (err, user) {
+          if (err) {
+            req.flash('error', { msg: err })
+            return res.redirect('back')
+          } else if (!user) {
+            req.flash('error', { msg: 'Password reset token is invalid or has expired.' })
+            return res.redirect('back')
           }
-          user.password = req.body.password;
-          user.passwordResetToken = undefined;
-          user.passwordResetExpires = undefined;
-          user.save(function(err) {
-            req.logIn(user, function(err) {
-              done(err, user);
-            });
-          });
-        });
+          user.password = req.body.password
+          user.passwordResetToken = undefined
+          user.passwordResetExpires = undefined
+          user.save(function (err) {
+            if (err) {
+              req.flash('error', { msg: err })
+            }
+            req.logIn(user, function (err) {
+              if (err) {
+                req.flash('error', { msg: err })
+              }
+              done(err, user)
+            })
+          })
+        })
     },
-    function(user, done) {
-      var transporter = nodemailer.createTransport();
+    function (user, done) {
+      var transporter = nodemailer.createTransport()
       var mailOptions = {
         from: 'support@pillo.ir',
         to: user.email,
         subject: 'Your Pillo password has been changed',
         text: 'Hello,\n\n' +
         'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-      };
-      transporter.sendMail(mailOptions, function(err) {
-        req.flash('success', { msg: 'Your password has been changed successfully.' });
-        res.redirect('/account');
-      });
+      }
+      transporter.sendMail(mailOptions, function (err) {
+        if (err) {
+          req.flash('error', { msg: err })
+        } else {
+          req.flash('success', { msg: 'Your password has been changed successfully.' })
+        }
+        res.redirect('/account')
+      })
     }
-  ]);
-};
+  ])
+}
 
-
-exports.link = {};
+exports.link = {}
 
 /**
  * POST /link/push
  */
-exports.link.pushPost = function(req, res, next) {
-  var deviceId = req.body.deviceId;
+exports.link.pushPost = function (req, res, next) {
+  var deviceId = req.body.deviceId
   if (!(deviceId && deviceId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i))) {
-    req.flash('error', { msg: 'Device ID is not valid or not available.' });
-    return res.redirect('/account');
+    req.flash('error', { msg: 'Device ID is not valid or not available.' })
+    return res.redirect('/account')
   }
-  User.findById(req.user.id, function(err, user) {
-    if (user.pushDeviceIds.indexOf(deviceId) === -1) {
-      user.pushDeviceIds.push(deviceId);
-      user.save(function(err){
-        req.flash('success', { msg: 'Device linked successfully.' });
-        res.redirect('/account');
-      });
+  User.findById(req.user.id, function (err, user) {
+    if (err) {
+      req.flash('error', { msg: err })
+      res.redirect('/account')
+    } else if (user.pushDeviceIds.indexOf(deviceId) === -1) {
+      user.pushDeviceIds.push(deviceId)
+      user.save(function (err) {
+        if (err) {
+          req.flash('error', { msg: err })
+        } else {
+          req.flash('success', { msg: 'Device linked successfully.' })
+        }
+        res.redirect('/account')
+      })
     } else {
-      req.flash('error', { msg: 'Device already linked.' });
-      res.redirect('/account');
+      req.flash('error', { msg: 'Device already linked.' })
+      res.redirect('/account')
     }
-  });
-};
+  })
+}
 
 /**
  * POST /link/telegram/:token
  */
-exports.link.telegramGet = function(req, res, next) {
-  var telegramToken = req.params.token;
+exports.link.telegramGet = function (req, res, next) {
+  var telegramToken = req.params.token
   if (!telegramToken) {
-    req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' });
-    return res.redirect('/account');
+    req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' })
+    return res.redirect('/account')
   }
   Token.findOne({ token: telegramToken, tokenType: 'telegram' })
     .where('expires').gt(Date.now())
-    .exec(function(err, token) {
+    .exec(function (err, token) {
       if (err || !token) {
-        req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' });
-        return res.redirect('/account');
+        req.flash('error', { msg: 'Telegram token is invalid or has expired. Get a token from @PilloRobot.' })
+        return res.redirect('/account')
       } else {
-        User.findById(req.user.id, function(err, user) {
-          if(err) {
-            req.flash('error', { msg: 'An error occured, contact system admin for more info.' });
-            return res.redirect('/account');
-          } else if (user.telegramToken == token.data.telegramChatId) {
-            req.flash('error', { msg: 'Telegram client already linked.' });
-            return res.redirect('/account');
+        User.findById(req.user.id, function (err, user) {
+          if (err) {
+            req.flash('error', { msg: 'An error occured, contact system admin for more info.' })
+            return res.redirect('/account')
+          } else if (user.telegramToken === token.data.telegramChatId) {
+            req.flash('error', { msg: 'Telegram client already linked.' })
+            return res.redirect('/account')
           } else {
-            user.telegramToken = token.data.telegramChatId;
-            user.save(function(err) {
-              req.flash('success', { msg: 'Telegram client linked successfully.' });
-              return res.redirect('/account');
-            });
+            user.telegramToken = token.data.telegramChatId
+            user.save(function (err) {
+              if (err) {
+                req.flash('error', { msg: err })
+              } else {
+                req.flash('success', { msg: 'Telegram client linked successfully.' })
+              }
+              return res.redirect('/account')
+            })
           }
-        });
+        })
       }
-    });
-};
+    })
+}
