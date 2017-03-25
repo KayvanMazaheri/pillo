@@ -1,5 +1,5 @@
 <h1 align="center">
-	<img height="200" src="https://github.com/KayvanMazaheri/pillo/raw/master/public/assets/image/pillo-logo.png" alt="Pillo Logo">	
+	<img height="200" src="https://github.com/KayvanMazaheri/pillo/raw/master/public/assets/image/pillo-logo.png" alt="Pillo Logo">
   <br>
   :pill: Pillo :pill:
 	<br>
@@ -43,6 +43,8 @@ They can be declared inside a file named `.env` (see [dotenv](https://github.com
 + SESSION_SECRET
 + KUE_WEB_USER
 + KUE_WEB_PASSWORD
++ ONESIGNAL_API_KEY
++ ONESIGNAL_APP_ID
 
 # Contribution Guide
 Any contribution is appreciated.
@@ -60,4 +62,3 @@ Support Pillo by making a donation here:
 
 # License
 The MIT License (MIT)
-
