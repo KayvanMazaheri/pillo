@@ -62,7 +62,7 @@ app.use(methodOverride('_method'))
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   store: new MongoStore({
     mongooseConnection: mongoose.connection,
     touchAfter: 24 * 3600
