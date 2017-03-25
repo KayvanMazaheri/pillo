@@ -41,7 +41,7 @@ exports.pillGet = function (req, res) {
     } else if (!pill) {
       req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
-    } else if (pill.userId !== req.user.id) {
+    } else if (pill.userId.toString() !== req.user.id.toString()) {
       req.flash('error', { msg: 'You are not authorized to view this page.' })
       res.redirect('/pill')
     } else {
@@ -71,7 +71,7 @@ exports.pillPut = function (req, res) {
     } else if (!pill) {
       req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
-    } else if (pill.userId !== req.user.id) {
+    } else if (pill.userId.toString() !== req.user.id.toString()) {
       req.flash('error', { msg: 'You are not authorized to edit this pill.' })
       res.redirect('/pill')
     } else {
@@ -109,7 +109,7 @@ exports.pillDelete = function (req, res) {
     } else if (!pill) {
       req.flash('error', { msg: 'Pill doesn\'t exist.' })
       res.redirect('/pill')
-    } else if (pill.userId !== req.user.id) {
+    } else if (pill.userId.toString() !== req.user.id.toString()) {
       req.flash('error', { msg: 'You are not authorized to delete this pill.' })
       res.redirect('/pill')
     } else {
