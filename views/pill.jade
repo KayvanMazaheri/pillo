@@ -19,6 +19,7 @@ block content
             label.col-sm-3(for='icon') Icon
             .col-sm-7
               select#icon.image-picker(name='icon', value='#{pill.icon}')
+                option(value='') None
                 optgroup(label='Tablet')
                   option(data-img-src='/assets/image/icon/tablet-l-0.png', data-img-alt='Large Tablet #0', value='http://pillo.ir/assets/image/icon/tablet-l-0.png') Large Tablet #0
                   option(data-img-src='/assets/image/icon/tablet-l-1.png', data-img-alt='Large Tablet #1', value='http://pillo.ir/assets/image/icon/tablet-l-1.png') Large Tablet #1
