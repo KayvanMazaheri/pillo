@@ -12,6 +12,7 @@ Visit [Pillo.ir](http://pillo.ir).
 
 ## Badges
 [![Travis](https://img.shields.io/travis/KayvanMazaheri/pillo.svg?maxAge=600&style=flat-square)](https://travis-ci.org/KayvanMazaheri/pillo)  
+[![Codacy grade](https://img.shields.io/codacy/grade/43a1001df5eb4c1a899029d8832e56f6.svg?maxAge=3600&style=flat-square)]()  
 [![David](https://img.shields.io/david/KayvanMazaheri/pillo.svg?style=flat-square)](https://david-dm.org/KayvanMazaheri/pillo)  
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)  
 [![license](https://img.shields.io/github/license/KayvanMazaheri/pillo.svg?style=flat-square)](https://github.com/KayvanMazaheri/pillo/blob/master/LICENSE)  
