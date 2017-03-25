@@ -40,6 +40,7 @@ var app = express()
 // queue.process('remind-console', remindController.consoleController);
 // queue.process('remind-email', remindController.emailController);
 // queue.process('remind-sms', remindController.smsController);
+queue.process('remind-push', remindController.pushController)
 queue.process('remind-telegram', remindController.telegramController)
 queue.process('remind-remind', remindController.remindController)
 
