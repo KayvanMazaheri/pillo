@@ -24,6 +24,7 @@ var pillSchema = new mongoose.Schema({
     currentDate: Date,
     step: { type: Number, required: true, default: 1 * 60 * 60 * 1000 }
   },
+  methods: { type: Array, default: [] },
   history: { type: Array, default: [] }
 }, schemaOptions)
 
