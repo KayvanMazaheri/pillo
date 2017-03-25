@@ -1,6 +1,8 @@
 {
   "danger": "Pillo is in active development and not ready for public use yet.",
   "changelog": [
+    { "date": "2017/3/25", "msg": "New Reminding Method: Push Notifications." },
+    { "date": "2017/3/23", "msg": "Edit/Delete Pills." },
     { "date": "2017/3/21", "msg": "Add announcements board." }
   ]
 }
