@@ -23,6 +23,7 @@ block content
                 th Title
                 th Description
                 th Time
+                th Methods
             tbody
               for pill, index in pills
                 tr
@@ -31,6 +32,7 @@ block content
                   th: a(href='/pill/#{pill.id}') #{pill.title}
                   th #{pill.description}
                   th #{moment(pill.rule.currentDate).fromNow()}
+                  th #{pill.methods.map(s => s.split('-').pop()).join(', ')}
           unless pills && pills.length
             .alert.alert-info(role='note')
               p No Pills Available.
