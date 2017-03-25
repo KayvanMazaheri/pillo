@@ -61,7 +61,7 @@ exports.pillPut = function (req, res) {
   if (!req.body.title || req.body.title.length < 3) { errors.push({ msg: 'Pill title must be at least 3 characters long.' }) }
   if (errors && errors.length > 0) {
     req.flash('error', errors)
-    return res.redirect('/pills')
+    return res.redirect('/pill')
   }
 
   Pill.findById(pillId, function (err, pill) {
@@ -148,7 +148,7 @@ exports.pillPost = function (req, res) {
   if (nextMoment.isSameOrBefore(startMoment)) { errors.push({ msg: 'Next Date/Time must be after the Start Date/Time.' }) }
   if (errors && errors.length > 0) {
     req.flash('error', errors)
-    return res.redirect('/pills')
+    return res.redirect('/pill')
   }
 
   let pill = new Pill()
