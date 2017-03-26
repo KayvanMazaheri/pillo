@@ -108,9 +108,18 @@ app.use('/kue', basicAuth(process.env.KUE_WEB_USER, process.env.KUE_WEB_PASSWORD
 
 // Production error handler
 if (app.get('env') === 'production') {
+  // unhandled routes
+  app.use(function (req, res) {
+    let status = 403
+    res.status(status).render('error', { title: 'Error', status: status })
+  })
+
+  // internal server errors
   app.use(function (err, req, res, next) {
     console.error(err.stack)
-    res.sendStatus(err.status || 500)
+    let status = err.status || 500
+    // res.sendStatus(status)
+    res.status(status).render('error', { title: 'Error', status: status })
   })
 }
 
