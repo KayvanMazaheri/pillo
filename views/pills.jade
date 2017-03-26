@@ -49,6 +49,7 @@ block content
             label.col-sm-3(for='description') Description
             .col-sm-7
               input.form-control(type='text', name='description', id='description')
+          hr
           .form-group
             label.col-sm-3(for='icon') Icon
             .col-sm-7
@@ -96,6 +97,10 @@ block content
                 label
                   input(type='checkbox', name='methods', value='remind-email', disabled)
                   |  Email
+          hr
+          p When should we notify you for the
+            b.text-info  first time
+            | ?
           .form-group
             label.col-sm-3 Start Date
             .col-sm-7
@@ -105,6 +110,10 @@ block content
             label.col-sm-3 Start Time
             .col-sm-7
               input.form-control(type='text', id='startTime')
+          hr
+          p When should we notify you for the
+            b.text-info  second time
+            | ?
           .form-group
             label.col-sm-3 Next Date
             .col-sm-7
