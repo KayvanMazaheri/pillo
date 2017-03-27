@@ -135,8 +135,16 @@ block scripts
   script(src='/js/lib/pickadate/picker.time.js')
   script(src='/js/lib/pickadate/legacy.js')
   script.
-    $('#startDate').pickadate();
-    $('#nextDate').pickadate();
+    $('#startDate').pickadate({
+    onSet: function() {
+    $('#startTime').click();
+    }
+    });
+    $('#nextDate').pickadate({
+    onSet: function() {
+    $('#nextTime').click();
+    }
+    });
     $('#startTime').pickatime();
     $('#nextTime').pickatime();
     $("#icon").imagepicker();
