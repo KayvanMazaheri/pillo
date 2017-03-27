@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  .container
+
+    .panel
+      .panel-body
+        if messages.success
+          .alert.alert-success(role='alert')
+            for success in messages.success
+              div= success.msg
+        if messages.error
+          .alert.alert-danger(role='alert')
+            for error in messages.error
+              div= error.msg
+        form.form-horizontal(method='POST', action='/link/push/')
+          .form-horizontal
+            legend Push Notification Devices
+            .form-group
+              label.col-sm-3 Linked Devices
+              .col-sm-7
+                if user.pushDeviceIds && user.pushDeviceIds.length > 0
+                  for deviceId in user.pushDeviceIds
+                    p: a.label.label-success
+                      span.glyphicon.glyphicon-tag
+                      |  #{deviceId}
+                else
+                  p: a.label.label-warning
+                    span.glyphicon.glyphicon-alert
+                    |  No Linked Devices Yet!
+                input.form-control(type='hidden', name='deviceId', id='deviceId')
+                button#linkPush.btn.btn-success(type='submit', disabled)
+                  span.glyphicon.glyphicon-link
+                  |  Link This Device
+
+    .panel
+      .panel-body
+        form-horizontal
+          .form-horizontal
+            legend Linked Messengers
+            .form-group
+              label.col-xs-3 Telegram
+              .col-xs-9
+                if user.telegramToken
+                  p.label.label-success
+                    span.glyphicon.glyphicon-ok
+                    |  Linked
+                else
+                  p: a(href='https://t.me/PilloRobot').btn.btn-sm.btn-primary
+                    span.glyphicon.glyphicon-link
+                    |  Link Now!
+
+block scripts
+  script.
+    OneSignal.push(function() {
+    OneSignal.getUserId(function(userId) {
+    $("#deviceId").val(userId);
+    $('#linkPush').prop('disabled', false)
+    });
+    });
