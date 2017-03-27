@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .container
+    .panel
+      .panel-body
+        if messages.success
+          .alert.alert-success(role='alert')
+            for success in messages.success
+              div= success.msg
+        if messages.error
+          .alert.alert-danger(role='alert')
+            for error in messages.error
+              div= error.msg
+
+    .panel
+      .panel-body
+        form.form-horizontal(method='POST', action='/link/push/')
+          .form-horizontal
+            legend Linked Push Devices
+            .form-group
+              .col-sm-offset-3.col-sm-4
+                if user.pushDeviceIds
+                  for deviceId in user.pushDeviceIds
+                    p: a.text-success(href="#"+deviceId)=deviceId
+                input.form-control(type='hidden', name='deviceId', id='deviceId')
+                button.btn.btn-success(type='submit') Register device for push notifications
+
+    .panel
+      .panel-body
+        form-horizontal
+          .form-horizontal
+            legend Linked Messengers
+            .form-group
+              .col-sm-offset-3.col-sm-4
+                if user.telegramToken
+                  p.text-success Linked to Telegram
+                else
+                  p: a(href='https://t.me/PilloRobot') Link your Telegram account
+
+block scripts
+  script.
+    OneSignal.push(function() {
+    OneSignal.getUserId(function(userId) {
+    $("#deviceId").val(userId);
+    });
+    });
