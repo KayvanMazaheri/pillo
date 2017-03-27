@@ -18,6 +18,8 @@ nav.navbar.navbar-default.navbar-static-top
         li(class=(title == 'About') ? 'active' : null)
           a(href='/about') About
       ul.nav.navbar-nav.navbar-right
+        li(class=(title == 'Settings') ? 'active' : null)
+          a(href='/settings') Settings
         if user
           li.dropdown
             a.navbar-avatar.dropdown-toggle(href='#', data-toggle='dropdown')
