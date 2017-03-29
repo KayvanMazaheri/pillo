@@ -60,5 +60,9 @@ Any contribution is appreciated.
 Support Pillo by making a donation here:  
 [![Donate](https://img.shields.io/badge/$-Donation-green.svg?style=flat-square)](http://pillo.ir/about#donate)
 
+# Special Thanks
++ Awesome cross-browser testing tool  
+<a href="https://www.browserstack.com" target="_blank"><img width="200" src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" atl="BroswerStack"></a>
+
 # License
 The MIT License (MIT)
