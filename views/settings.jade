@@ -15,9 +15,9 @@ block content
               div= error.msg
         form.form-horizontal(method='POST', action='/link/push/')
           .form-horizontal
-            legend Push Notification Devices
+            legend #{t('app.settings.push_notification.legend')}
             .form-group
-              label.col-sm-3 Linked Devices
+              label.col-sm-3 #{t('app.settings.push_notification.linked_devices')}
               .col-sm-7
                 if user.pushDeviceIds && user.pushDeviceIds.length > 0
                   for deviceId in user.pushDeviceIds
@@ -27,28 +27,28 @@ block content
                 else
                   p: a.label.label-warning
                     span.glyphicon.glyphicon-alert
-                    |  No Linked Devices Yet!
+                    |  #{t('app.settings.push_notification.no_linked_device')}
                 input.form-control(type='hidden', name='deviceId', id='deviceId')
                 button#linkPush.btn.btn-success(type='submit', disabled)
                   span.glyphicon.glyphicon-link
-                  |  Link This Device
+                  |  #{t('app.settings.push_notification.link_device')}
 
     .panel
       .panel-body
         form-horizontal
           .form-horizontal
-            legend Linked Messengers
+            legend #{t('app.settings.messengers.legend')}
             .form-group
-              label.col-xs-3 Telegram
+              label.col-xs-3 #{t('app.settings.messengers.telegram')}
               .col-xs-9
                 if user.telegramToken
                   p.label.label-success
                     span.glyphicon.glyphicon-ok
-                    |  Linked
+                    |  #{t('app.settings.messengers.linked')}
                 else
                   p: a(href='https://t.me/PilloRobot').btn.btn-sm.btn-primary
                     span.glyphicon.glyphicon-link
-                    |  Link Now!
+                    |  #{t('app.settings.messengers.link_now')}
 
 block scripts
   script.

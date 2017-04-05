@@ -6,20 +6,20 @@ nav.navbar.navbar-default.navbar-static-top
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='/') Pillo
+      a.navbar-brand(href='/') #{t('app.header.brand')}
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
         li(class=(title == 'Home') ? 'active' : null)
-          a(href='/') Home
+          a(href='/') #{t('app.header.home')}
         li(class=(title == 'Pills') ? 'active' : null)
-          a(href='/pill') Pills
+          a(href='/pill') #{t('app.header.pills')}
         //li(class=(title == 'Contact') ? 'active' : null)
-          //a(href='/contact') Contact
+          //a(href='/contact') #{t('app.header.contact')}
         li(class=(title == 'About') ? 'active' : null)
-          a(href='/about') About
+          a(href='/about') #{t('app.header.about')}
       ul.nav.navbar-nav.navbar-right
         li(class=(title == 'Settings') ? 'active' : null)
-          a(href='/settings') Settings
+          a(href='/settings') #{t('app.header.settings')}
         if user
           li.dropdown
             a.navbar-avatar.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -31,12 +31,12 @@ nav.navbar.navbar-default.navbar-static-top
               i.caret
             ul.dropdown-menu
               li
-                a(href='/account') My Account
+                a(href='/account') #{t('app.header.my_account')}
               li.divider
               li
-                a(href='/logout') Logout
+                a(href='/logout') #{t('app.header.logout')}
         else
           li(class=(title == 'Log in') ? 'active' : null)
-            a(href='/login') Log in
+            a(href='/login') #{t('app.header.login')}
           li(class=(title == 'Sign up') ? 'active' : null)
-            a(href='/signup') Sign up
+            a(href='/signup') #{t('app.header.signup')}

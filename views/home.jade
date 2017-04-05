@@ -22,7 +22,7 @@ block content
           h1.text-center
             | Pillo
             br
-            small Simple medication reminder
+            small #{t('app.home.slogan')}
 
       .col-xs-12.col-sm-12.col-md-5
         .jumbotron
@@ -30,7 +30,7 @@ block content
             .alert.alert-danger(role='announcement')
               h5 #{announcements.danger}
           .alert.alert-info
-            h4.text-center Announcements
+            h4.text-center #{t('app.home.announcements')}
             br
             if announcements && announcements.changelog
               ul

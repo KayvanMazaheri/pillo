@@ -14,73 +14,73 @@ block content
               div= error.msg
 
         form.form-horizontal(method='POST', action='/account?_method=PUT')
-          legend Profile Information
+          legend #{t('app.account.profile.legend')}
           .form-group
-            label.col-sm-3(for='email') Email
+            label.col-sm-3(for='email') #{t('app.account.profile.email')}
             .col-sm-7
               input.form-control(type='email', name='email', id='email', value=user.email)
           .form-group
-            label.col-sm-3(for='name') Name
+            label.col-sm-3(for='name') #{t('app.account.profile.name')}
             .col-sm-7
               input.form-control(type='text', name='name', id='name', value=user.name)
           .form-group
-            label.col-sm-3 Gender
+            label.col-sm-3 #{t('app.account.profile.gender')}
             .col-sm-4
               label.radio-inline.radio.col-sm-4
                 input(type='radio', checked=(user.gender == 'male'), name='gender', value='male', data-toggle='radio')
-                span Male
+                span #{t('app.account.profile.male')}
               label.radio-inline.col-sm-4
                 input(type='radio', checked=(user.gender == 'female'), name='gender', value='female', data-toggle='radio')
-                span Female
+                span #{t('app.account.profile.female')}
           .form-group
-            label.col-sm-3(for='location') Location
+            label.col-sm-3(for='location') #{t('app.account.profile.location')}
             .col-sm-7
               input.form-control(type='text', name='location', id='location', value=user.location)
           .form-group
-            label.col-sm-3(for='website') Website
+            label.col-sm-3(for='website') #{t('app.account.profile.website')}
             .col-sm-7
               input.form-control(type='text', name='website', id='website', value=user.website)
           .form-group
-            label.col-sm-3 Gravatar
+            label.col-sm-3 #{t('app.account.profile.gravatar')}
             .col-sm-4
               img(src=user.gravatar, class='profile', width='100', height='100')
           .form-group
             .col-sm-offset-3.col-sm-4
-              button.btn.btn-success(type='submit') Update Profile
+              button.btn.btn-success(type='submit') #{t('app.account.profile.update_profile')}
 
     .panel
       .panel-body
         form.form-horizontal(method='POST', action='/account?_method=PUT')
-          legend Change Password
+          legend #{t('app.account.profile.change_password_legend')}
           .form-group
-            label.col-sm-3(for='password') New Password
+            label.col-sm-3(for='password') #{t('app.account.profile.new_password')}
             .col-sm-7
               input.form-control(type='password', name='password', id='password')
           .form-group
-            label.col-sm-3(for='confirm') Confirm Password
+            label.col-sm-3(for='confirm') #{t('app.account.profile.confirm_password')}
             .col-sm-7
               input.form-control(type='password', name='confirm', id='confirm')
           .form-group
             .col-sm-4.col-sm-offset-3
-              button.btn.btn-success(type='submit') Change Password
+              button.btn.btn-success(type='submit') #{t('app.account.profile.change_password')}
 
 
     .panel
       .panel-body
         .form-horizontal
-          legend Linked Accounts
+          legend #{t('app.account.profile.linked_accounts_legend')}
           .form-group
             .col-sm-offset-3.col-sm-4
               if user.google
-                p: a.text-danger(href='/unlink/google') Unlink your Google account
+                p: a.text-danger(href='/unlink/google') #{t('app.account.profile.unlink_google')}
               else
-                p: a(href='/auth/google') Link your Google account
+                p: a(href='/auth/google') #{t('app.account.profile.link_google')}
 
     .panel
       .panel-body
         form.form-horizontal(method='POST', action='/account?_method=DELETE')
-          legend Delete Account
+          legend #{t('app.account.profile.delete_account_legend')}
           .form-group
-            p.col-sm-offset-3.col-sm-9 You can delete your account, but keep in mind this action is irreversible.
+            p.col-sm-offset-3.col-sm-9 #{t('app.account.profile.delete_account_description')}
             .col-sm-offset-3.col-sm-9
-              button.btn.btn-danger(type='submit') Delete my account
+              button.btn.btn-danger(type='submit') #{t('app.account.profile.delete_account')}

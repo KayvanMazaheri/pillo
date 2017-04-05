@@ -15,9 +15,9 @@ block content
               div= error.msg
 
         form(method='POST')
-          legend Forgot Password
+          legend #{t('app.account.forgot.legend')}
           .form-group
-            p Enter your email address below and we'll send you password reset instructions.
-            label(for='email') Email
-            input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus=true)
-          button.btn.btn-success(type='submit') Reset Password
+            p= t('app.account.forgot.description')
+            label(for='email') #{t('app.account.forgot.email')}
+            input.form-control(type='email', name='email', id='email', placeholder=t('app.account.forgot.email_placeholder'), autofocus=true)
+          button.btn.btn-success(type='submit') #{t('app.account.forgot.reset_password')}

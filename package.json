@@ -4,7 +4,7 @@
   "description": "My app description",
   "scripts": {
     "build": "npm-run-all build:*",
-    "build:css": "lessc public/css/main.less > public/css/main.css",
+    "build:css": "lessc public/css/main.less > public/css/main.css && lessc public/css/main.rtl.less > public/css/main.rtl.css",
     "deploy": "npm test && git push heroku master",
     "postinstall": "npm run build",
     "start": "node server.js",
@@ -25,6 +25,9 @@
     "express-flash": "0.0.2",
     "express-session": "^1.2.1",
     "express-validator": "^3.1.2",
+    "i18next": "^7.1.3",
+    "i18next-express-middleware": "^1.0.3",
+    "i18next-node-fs-backend": "^0.1.3",
     "jade": "^1.11.0",
     "kue": "^0.11.5",
     "less": "^2.7.1",

@@ -10,24 +10,24 @@ block content
               div= error.msg
 
         form(method='POST')
-          legend Log In
+          legend #{t('app.account.login.legend')}
           .form-group
-            label.control-label(for='email') Email
-            input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus=true)
+            label.control-label(for='email') #{t('app.account.login.email')}
+            input.form-control(type='email', name='email', id='email', placeholder=t('app.account.login.email_placeholder'), autofocus=true)
           .form-group
-            label.control-label(for='password') Password
-            input.form-control(type='password', name='password', id='password', placeholder='Password')
+            label.control-label(for='password') #{t('app.account.login.password')}
+            input.form-control(type='password', name='password', id='password', placeholder=t('app.account.login.password_placeholder'))
           .form-group
             a(href='/forgot')
-              strong Forgot your password?
-          button.btn.btn-success(type='submit') Log in
+              strong #{t('app.account.login.forgot')}
+          button.btn.btn-success(type='submit') #{t('app.account.login.login')}
 
         .hr-title
-          span or
+          span #{t('app.account.login.or')}
 
         .btn-toolbar.text-center
-          a.btn.btn-google(href='/auth/google') Sign in with Google
+          a.btn.btn-google(href='/auth/google') #{t('app.account.login.sign_in_with_google')}
 
-    p.text-center Don't have an account?&nbsp;
+    p.text-center #{t('app.account.login.dont_have_account')}&nbsp;
       a(href='/signup')
-        strong Sign up
+        strong #{t('app.account.login.signup')}
