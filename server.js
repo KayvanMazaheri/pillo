@@ -15,7 +15,9 @@ var MongoStore = require('connect-mongo')(session)
 var async = require('async')
 var basicAuth = require('basic-auth-connect')
 var favicon = require('serve-favicon')
-
+var i18next = require('i18next')
+var i18nextMiddleware = require('i18next-express-middleware')
+var i18nextFilesystemBackend = require('i18next-node-fs-backend')
 // Load environment variables from .env file
 dotenv.load()
 
@@ -23,6 +25,20 @@ dotenv.load()
 var queue = kue.createQueue({
   redis: process.env.REDIS_URL
 })
+
+// i18n
+i18next
+  .use(i18nextMiddleware.LanguageDetector)
+  .use(i18nextFilesystemBackend)
+  .init({
+    backend: {
+      loadPath: 'locales/{{lng}}/{{ns}}.json'
+    },
+    detection: {
+      caches: ['cookie']
+    },
+    debug: false
+  })
 
 // Controllers
 var HomeController = require('./controllers/home')
@@ -50,6 +66,7 @@ mongoose.connection.on('error', function () {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.')
   process.exit(1)
 })
+app.use(i18nextMiddleware.handle(i18next))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 app.set('port', process.env.PORT || 3000)
