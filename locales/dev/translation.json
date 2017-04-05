@@ -97,6 +97,68 @@
     "home": {
       "slogan": "Simple medication reminder",
       "announcements": "Announcements"
+    },
+    "pill": {
+      "edit": "Edit",
+      "title": "Title",
+      "description": "Description",
+      "icon": "Icon",
+      "tablet": "Tablet",
+      "pill": "Pill",
+      "reminding_methods": "Reminding Methods",
+      "telegram": "Telegram",
+      "push_notification": "Push Notification",
+      "sms": "SMS",
+      "email": "Email",
+      "edit_pill": "Edit Pill",
+      "delete_pill": "Delete Pill"
+
+    },
+    "pills": {
+      "info": {
+        "legend": "Pills Information",
+        "icon": "Icon",
+        "title": "Title",
+        "description": "Description",
+        "time": "Time",
+        "methods": "Methods",
+        "no_pill": "No Pills Available."
+      },
+      "new": {
+        "legend": "Add New Pill",
+        "icon": "Icon",
+        "title": "Title",
+        "description": "Description",
+        "tablet": "Tablet",
+        "pill": "Pill",
+        "reminding_methods": "Reminding Methods",
+        "telegram": "Telegram",
+        "push_notification": "Push Notification",
+        "sms": "SMS",
+        "email": "Email",
+        "first_time_description": "When should we notify you for the first time?",
+        "start_date": "Start Date",
+        "start_time": "Start Time",
+        "next_time_description": "When should we notify you for the second time?",
+        "next_date": "Next Date",
+        "next_time": "Next Time",
+        "add_pill": "Add Pill"
+      }
+
+    },
+    "settings": {
+      "push_notification": {
+        "legend": "Push Notification Devices",
+        "linked_devices": "Linked Devices",
+        "no_linked_device": "No Linked Devices Yet!",
+        "link_device": "Link This Device"
+      },
+      "messengers": {
+        "legend": "Linked Messengers",
+        "telegram": "Telegram",
+        "linked": "Linked",
+        "link_now": "Link Now!"
+      }
     }
   }
 }

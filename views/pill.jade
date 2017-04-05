@@ -6,21 +6,21 @@ block content
       .panel-body
         form#deletePillForm.form-horizontal(method='POST', action='/pill/#{pill.id}?_method=DELETE')
         form#editPillForm.form-horizontal(method='POST', action='/pill/#{pill.id}?_method=PUT')
-          legend Edit #{pill.title}
+          legend #{t('app.pill.edit')} #{pill.title}
           .form-group
-            label.col-sm-3(for='title') Title
+            label.col-sm-3(for='title') #{t('app.pill.title')}
             .col-sm-7
               input.form-control(type='text', name='title', id='title', value='#{pill.title}')
           .form-group
-            label.col-sm-3(for='description') Description
+            label.col-sm-3(for='description') #{t('app.pill.description')}
             .col-sm-7
               input.form-control(type='text', name='description', id='description', value='#{pill.description}')
           .form-group
-            label.col-sm-3(for='icon') Icon
+            label.col-sm-3(for='icon') #{t('app.pill.icon')}
             .col-sm-7
               select#icon.image-picker(name='icon', value='#{pill.icon}')
                 option(value='') None
-                optgroup(label='Tablet')
+                optgroup(label=t('app.pill.tablet'))
                   option(data-img-src='/assets/image/icon/tablet-l-0.png', data-img-alt='Large Tablet #0', value='http://pillo.ir/assets/image/icon/tablet-l-0.png') Large Tablet #0
                   option(data-img-src='/assets/image/icon/tablet-l-1.png', data-img-alt='Large Tablet #1', value='http://pillo.ir/assets/image/icon/tablet-l-1.png') Large Tablet #1
                   option(data-img-src='/assets/image/icon/tablet-l-2.png', data-img-alt='Large Tablet #2', value='http://pillo.ir/assets/image/icon/tablet-l-2.png') Large Tablet #2
@@ -36,37 +36,37 @@ block content
                   //option(data-img-src='/assets/image/icon/tablet-s-2.png', data-img-alt='Small Tablet #2', value='/assets/image/icon/tablet-s-2.png') Small Tablet #2
                   //option(data-img-src='/assets/image/icon/tablet-s-3.png', data-img-alt='Small Tablet #3', value='/assets/image/icon/tablet-s-3.png') Small Tablet #3
                   //option(data-img-src='/assets/image/icon/tablet-s-4.png', data-img-alt='Small Tablet #4', value='/assets/image/icon/tablet-s-4.png') Small Tablet #4
-                optgroup(label='Pill')
+                optgroup(label=t('app.pill.pill'))
                   option(data-img-src='/assets/image/icon/pill-0.png', data-img-alt='Pill #0', value='http://pillo.ir/assets/image/icon/pill-0.png') Pill #0
                   option(data-img-src='/assets/image/icon/pill-1.png', data-img-alt='Pill #1', value='http://pillo.ir/assets/image/icon/pill-1.png') Pill #1
                   option(data-img-src='/assets/image/icon/pill-2.png', data-img-alt='Pill #2', value='http://pillo.ir/assets/image/icon/pill-2.png') Pill #2
                   option(data-img-src='/assets/image/icon/pill-3.png', data-img-alt='Pill #3', value='http://pillo.ir/assets/image/icon/pill-3.png') Pill #3
                   option(data-img-src='/assets/image/icon/pill-4.png', data-img-alt='Pill #4', value='http://pillo.ir/assets/image/icon/pill-4.png') Pill #4
           .form-group
-            label.col-sm-3  Reminding Methods
+            label.col-sm-3  #{t('app.pill.reminding_methods')}
             .col-sm-7
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-telegram')
-                  |  Telegram
+                  |  #{t('app.pill.telegram')}
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-push')
-                  |  Push Notifcation
+                  |  #{t('app.pill.push_notification')}
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-sms', disabled)
-                  |  SMS
+                  |  #{t('app.pill.sms')}
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-email', disabled)
-                  |  Email
+                  |  #{t('app.pill.email')}
           .form-group
             .col-sm-4.col-sm-offset-3
-              button.btn.btn-success(type='button', onClick='$("#editPillForm").submit();') Edit Pill
+              button.btn.btn-success(type='button', onClick='$("#editPillForm").submit();') #{t('app.pill.edit_pill')}
           .form-group
             .col-sm-4.col-sm-offset-3
-              button.btn.btn-danger(type='button', onClick='$("#deletePillForm").submit();') Delete Pill
+              button.btn.btn-danger(type='button', onClick='$("#deletePillForm").submit();') #{t('app.pill.delete_pill')}
 block scripts
   script(src='/js/lib/image-picker/image-picker.js')
   script.

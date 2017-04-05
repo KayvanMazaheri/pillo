@@ -14,18 +14,18 @@ block content
               div= error.msg
 
         div.form-horizontal
-          legend Pills Information
+          legend #{t('app.pills.info.legend')}
           if pills && pills.length
             .table-responsive
               table.table.table-striped
                 thead
                   tr
                     th #
-                    th Icon
-                    th Title
-                    th Description
-                    th Time
-                    th Methods
+                    th #{t('app.pills.info.icon')}
+                    th #{t('app.pills.info.title')}
+                    th #{t('app.pills.info.description')}
+                    th #{t('app.pills.info.time')}
+                    th #{t('app.pills.info.methods')}
                 tbody
                   for pill, index in pills
                     tr
@@ -37,26 +37,26 @@ block content
                       th #{pill.methods.map(s => s.split('-').pop()).join(', ')}
           else
             .alert.alert-info(role='note')
-              p No Pills Available.
+              p #{t('app.pills.info.no_pill')}
 
     .panel
       .panel-body
         form#addPillForm.form-horizontal(method='POST', action='/pill')
-          legend New Pill
+          legend #{t('app.pills.new.legend')}
           .form-group
-            label.col-sm-3(for='title') Title
+            label.col-sm-3(for='title') #{t('app.pills.new.title')}
             .col-sm-7
               input.form-control(type='text', name='title', id='title')
           .form-group
-            label.col-sm-3(for='description') Description
+            label.col-sm-3(for='description') #{t('app.pills.new.description')}
             .col-sm-7
               input.form-control(type='text', name='description', id='description')
           hr
           .form-group
-            label.col-sm-3(for='icon') Icon
+            label.col-sm-3(for='icon') #{t('app.pills.new.icon')}
             .col-sm-7
               select#icon.image-picker(name='icon')
-                optgroup(label='Tablet')
+                optgroup(label=t('app.pills.new.tablet'))
                   option(data-img-src='/assets/image/icon/tablet-l-0.png', data-img-alt='Large Tablet #0', value='http://pillo.ir/assets/image/icon/tablet-l-0.png') Large Tablet #0
                   option(data-img-src='/assets/image/icon/tablet-l-1.png', data-img-alt='Large Tablet #1', value='http://pillo.ir/assets/image/icon/tablet-l-1.png') Large Tablet #1
                   option(data-img-src='/assets/image/icon/tablet-l-2.png', data-img-alt='Large Tablet #2', value='http://pillo.ir/assets/image/icon/tablet-l-2.png') Large Tablet #2
@@ -72,7 +72,7 @@ block content
                   //option(data-img-src='/assets/image/icon/tablet-s-2.png', data-img-alt='Small Tablet #2', value='/assets/image/icon/tablet-s-2.png') Small Tablet #2
                   //option(data-img-src='/assets/image/icon/tablet-s-3.png', data-img-alt='Small Tablet #3', value='/assets/image/icon/tablet-s-3.png') Small Tablet #3
                   //option(data-img-src='/assets/image/icon/tablet-s-4.png', data-img-alt='Small Tablet #4', value='/assets/image/icon/tablet-s-4.png') Small Tablet #4
-                optgroup(label='Pill')
+                optgroup(label=t('app.pills.new.pill'))
                   option(data-img-src='/assets/image/icon/pill-0.png', data-img-alt='Pill #0', value='http://pillo.ir/assets/image/icon/pill-0.png') Pill #0
                   option(data-img-src='/assets/image/icon/pill-1.png', data-img-alt='Pill #1', value='http://pillo.ir/assets/image/icon/pill-1.png') Pill #1
                   option(data-img-src='/assets/image/icon/pill-2.png', data-img-alt='Pill #2', value='http://pillo.ir/assets/image/icon/pill-2.png') Pill #2
@@ -81,53 +81,49 @@ block content
 
           hr
           .form-group
-            label.col-sm-3  Reminding Methods
+            label.col-sm-3  #{t('app.pills.new.reminding_methods')}
             .col-sm-7
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-telegram')
-                  |  Telegram
+                  |  #{t('app.pills.new.telegram')}
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-push')
-                  |  Push Notifcation
+                  |  #{t('app.pills.new.push_notification')}
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-sms', disabled)
-                  |  SMS
+                  |  #{t('app.pills.new.sms')}
               .checkbox
                 label
                   input(type='checkbox', name='methods', value='remind-email', disabled)
-                  |  Email
+                  |  #{t('app.pills.new.email')}
           hr
-          p When should we notify you for the
-            b.text-info  first time
-            | ?
+          p #{t('app.pills.new.first_time_description')}
           .form-group
-            label.col-sm-3 Start Date
+            label.col-sm-3 #{t('app.pills.new.start_date')}
             .col-sm-7
               input.form-control(type='text', id='startDate')
               input.form-control(type='hidden', id='finalStartDate', name='startDateUTC')
           .form-group
-            label.col-sm-3 Start Time
+            label.col-sm-3 #{t('app.pills.new.start_time')}
             .col-sm-7
               input.form-control(type='text', id='startTime')
           hr
-          p When should we notify you for the
-            b.text-info  second time
-            | ?
+          p #{t('app.pills.new.next_time_description')}
           .form-group
-            label.col-sm-3 Next Date
+            label.col-sm-3 #{t('app.pills.new.next_date')}
             .col-sm-7
               input.form-control(type='text', id='nextDate')
               input.form-control(type='hidden', id='finalNextDate', name='nextDateUTC')
           .form-group
-            label.col-sm-3 Next Time
+            label.col-sm-3 #{t('app.pills.new.next_time')}
             .col-sm-7
               input.form-control(type='text', id='nextTime')
           .form-group
             .col-sm-4.col-sm-offset-3
-              button.btn.btn-success(type='button', onclick='calculateUTC()') Add Pill
+              button.btn.btn-success(type='button', onclick='calculateUTC()') #{t('app.pills.new.add_pill')}
 block scripts
   script(src='/js/lib/image-picker/image-picker.js')
   script(src='/js/lib/pickadate/picker.js')
