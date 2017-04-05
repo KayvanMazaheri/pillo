@@ -4,7 +4,7 @@
   "description": "My app description",
   "scripts": {
     "build": "npm-run-all build:*",
-    "build:css": "lessc public/css/main.less > public/css/main.css",
+    "build:css": "lessc public/css/main.less > public/css/main.css && lessc public/css/main.rtl.less > public/css/main.rtl.css",
     "deploy": "npm test && git push heroku master",
     "postinstall": "npm run build",
     "start": "node server.js",
