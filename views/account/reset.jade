@@ -15,12 +15,12 @@ block content
               div= error.msg
 
         form(method='POST')
-          legend Reset Password
+          legend #{t('app.account.reset.legend')}
           .form-group
-            label(for='password') New Password
+            label(for='password') #{t('app.account.reset.new_password')}
             input.form-control(type='password', name='password', id='password', placeholder='New password', autofocus=true)
           .form-group
-            label(for='confirm') Confirm Password
+            label(for='confirm') #{t('app.account.reset.confirm_password')}
             input.form-control(type='password', name='confirm', id='confirm', placeholder='Confirm password')
           .form-group
-            button.btn.btn-success(type='submit') Change Password
+            button.btn.btn-success(type='submit') #{t('app.account.reset.change_password')}

@@ -10,26 +10,26 @@ block content
               div= error.msg
 
         form(method='POST')
-          legend Create an account
+          legend #{t('app.account.signup.legend')}
           .form-group
-            label(for='name') Name
-            input.form-control(type='text', name='name', id='name', placeholder='Name', autofocus=true)
+            label(for='name') #{t('app.account.signup.name')}
+            input.form-control(type='text', name='name', id='name', placeholder=t('app.account.signup.name_placeholder'), autofocus=true)
           .form-group
-            label(for='email') Email
-            input.form-control(type='email', name='email', id='email', placeholder='Email')
+            label(for='email') #{t('app.account.signup.email')}
+            input.form-control(type='email', name='email', id='email', placeholder=t('app.account.signup.email_placeholder'))
           .form-group
-            label(for='password') Password
-            input.form-control(type='password', name='password', id='password', placeholder='Password')
+            label(for='password') #{t('app.account.signup.password')}
+            input.form-control(type='password', name='password', id='password', placeholder=t('app.account.signup.password_placeholder'))
           .form-group
-            small.text-muted By signing up, you agree to the <a href="/">Terms of Service</a>.
-          button.btn.btn-success(type='submit') Create an account
+            small.text-muted #{t('app.account.signup.agree_to_the_terms')}
+          button.btn.btn-success(type='submit') #{t('app.account.signup.create_account')}
 
         .hr-title
-          span or
+          span #{t('app.account.signup.or')}
 
         .btn-toolbar.text-center
-          a.btn.btn-google(href='/auth/google') Sign in with Google
+          a.btn.btn-google(href='/auth/google') #{t('app.account.signup.sign_in_with_google')}
 
-    p.text-center Already have an account?&nbsp;
+    p.text-center #{t('app.account.signup.already_have_account')}&nbsp;
       a(href='/login')
-        strong Log in
+        strong #{t('app.account.signup.login')}

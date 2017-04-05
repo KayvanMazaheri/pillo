@@ -3,6 +3,100 @@
     "css": "/css/main.css"
   },
   "app": {
+    "header": {
+      "brand": "Pillo",
+      "home": "Home",
+      "pills": "Pills",
+      "contact": "Contact",
+      "about": "About",
+      "settings": "Settings",
+      "my_account": "My Account",
+      "logout": "Logout",
+      "login": "Log in",
+      "signup": "Sign up"
 
+    },
+    "account": {
+      "forgot": {
+        "legend": "Forgot Password",
+        "description": "Enter your email address below and we'll send you password reset instructions.",
+        "email": "Email",
+        "email_placeholder": "Email",
+        "reset_password": "Reset Password"
+      },
+      "login": {
+        "legend": "Log In",
+        "email": "Email",
+        "email_placeholder": "Email",
+        "password": "Password",
+        "password_placeholder": "Password",
+        "forgot": "Forgot your password?",
+        "login": "Log in",
+        "or": "or",
+        "sign_in_with_google": "Sign in with Google",
+        "dont_have_account": "Don't have an account?",
+        "signup": "Sign up"
+      },
+      "profile": {
+        "legend": "Profile Information",
+        "email": "Email",
+        "name": "Name",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "location": "Location",
+        "website": "Website",
+        "gravatar": "Gravatar",
+        "update_profile": "Update Profile",
+        "change_password_legend": "Change Password",
+        "new_password": "New Password",
+        "confirm_password": "Confirm Password",
+        "change_password": "Change Password",
+        "linked_accounts_legend": "Linked Accounts",
+        "unlink_google": "Unlink your Google account",
+        "link_google": "Link your Google account",
+        "delete_account_legend": "Delete Account",
+        "delete_account": "Delete my account",
+        "delete_account_description": "You can delete your account, but keep in mind this action is irreversible."
+      },
+      "reset": {
+        "legend": "Reset Password",
+        "new_password": "New Password",
+        "confirm_password": "Confirm Password",
+        "change_password": "Change Password"
+      },
+      "signup": {
+        "legend": "Create an account",
+        "name": "Name",
+        "name_placeholder": "Name",
+        "email": "Email",
+        "email_placeholder": "Email",
+        "password": "Password",
+        "password_placeholder": "Password",
+        "agree_to_the_terms": "By signing up, you agree to the Terms of Service.",
+        "create_account": "Create Account",
+        "or": "or",
+        "sign_in_with_google": "Sign in with Google",
+        "login": "Log in",
+        "already_have_account": "Already have an account?"
+      }
+    },
+    "footer": {
+      "footer": "Pillo - Simple medication reminder."
+    },
+    "about": {
+      "legend": "About Pillo",
+      "donate": {
+        "legend": "Donate",
+        "description": "Here are some ideas for donation and motivating us to improve Pillo"
+      }
+    },
+    "error": {
+      "legend": "Oops!"
+    },
+    "home": {
+      "slogan": "Simple medication reminder",
+      "announcements": "Announcements"
+    }
   }
 }
