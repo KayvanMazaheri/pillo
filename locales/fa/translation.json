@@ -1,5 +1,164 @@
 {
   "resources": {
     "css": "/css/main.rtl.css"
+  },
+  "app": {
+    "header": {
+      "brand": "Pillo",
+      "home": "خانه",
+      "pills": "دارو‌ها",
+      "contact": "تماس",
+      "about": "درباره",
+      "settings": "تنظیمات",
+      "my_account": "اکانت من",
+      "logout": "خروج",
+      "login": "ورود",
+      "signup": "ثبت نام"
+
+    },
+    "account": {
+      "forgot": {
+        "legend": "Forgot Password",
+        "description": "ایمیل خود را در کادر زیر وارد کنید، نحوه‌ی تغییر کلمه‌ی عبور را برای شما می‌فرستیم",
+        "email": "ایمیل",
+        "email_placeholder": "ایمیل",
+        "reset_password": "کلمه‌ی عبور را عوض کن"
+      },
+      "login": {
+        "legend": "ورود",
+        "email": "ایمیل",
+        "email_placeholder": "ایمیل",
+        "password": "کلمه‌ی عبور",
+        "password_placeholder": "کلمه‌ی عبور",
+        "forgot": "کلمه‌ی عبور خود را فراموش کرده‌اید؟",
+        "login": "ورود",
+        "or": "یا",
+        "sign_in_with_google": "با استفاده از گوگل وارد شوید",
+        "dont_have_account": "حساب کاربری ندارید؟",
+        "signup": "ثبت نام کنید"
+      },
+      "profile": {
+        "legend": "اطلاعات حساب کاربری",
+        "email": "ایمیل",
+        "name": "نام",
+        "gender": "جنسیت",
+        "male": "مرد",
+        "female": "زن",
+        "location": "موقعیت",
+        "website": "وب‌سایت",
+        "gravatar": "گراواتار",
+        "update_profile": "به‌روز رسانی حساب کاربری",
+        "change_password_legend": "تغییر کلمه‌ی عبور",
+        "new_password": "کلمه‌ی عبور جدید",
+        "confirm_password": "تایید کلمه‌ی عبور",
+        "change_password": "تغییر کلمه‌ی عبور",
+        "linked_accounts_legend": "حساب‌های متصل",
+        "unlink_google": "حساب گوگل خود را جدا کنید",
+        "link_google": "حساب گوگل خود را متصل کنید",
+        "delete_account_legend": "حذف حساب کاربری",
+        "delete_account": "حساب کاربری من را حذف کن",
+        "delete_account_description": "شما می‌توانید حساب کاربری خود را حذف کنید، اما به یاد داشته باشید این عمل برگشت ناپذیر است."
+      },
+      "reset": {
+        "legend": "تغییر کلمه‌ی عبور",
+        "new_password": "کلمه‌ی عبور جدید",
+        "confirm_password": "تایید کلمه‌ی عبور",
+        "change_password": "تغییر کلمه‌ی عبور"
+      },
+      "signup": {
+        "legend": "یک حساب کاربری بسازید",
+        "name": "نام",
+        "name_placeholder": "نام",
+        "email": "ایمیل",
+        "email_placeholder": "ایمیل",
+        "password": "کلمه‌ی عبور",
+        "password_placeholder": "کلمه‌ی عبور",
+        "agree_to_the_terms": "شما با ثبت نام کردن، موافقت خود را با ظرایط استفاده از این سرویس تایید می‌کنید.",
+        "create_account": "ایجاد حساب کاربری",
+        "or": "یا",
+        "sign_in_with_google": "با استفاده از گوگل وارد شوید",
+        "login": "ورود",
+        "already_have_account": "حساب کاربری دارید؟"
+      }
+    },
+    "footer": {
+      "footer": "Pillo - یک یادآور ساده برای دارو ها"
+    },
+    "about": {
+      "legend": "درباره Pillo",
+      "donate": {
+        "legend": "حمایت مالی",
+        "description": "این‌ها ایده هایی برای حمایت مالی از Pillo هستند. با حمایت خود ما را برای ادامه‌ی توسعه‌ی این سرویس یاری کنید."
+      }
+    },
+    "error": {
+      "legend": "ای وای!"
+    },
+    "home": {
+      "slogan": "یادآوری ساده برای دارو ها",
+      "announcements": "اطلاعیه ها"
+    },
+    "pill": {
+      "edit": "ویرایش",
+      "title": "عنوان",
+      "description": "توضیحات",
+      "icon": "نماد",
+      "tablet": "قرص",
+      "pill": "کپسول",
+      "reminding_methods": "روش‌های یادآوری",
+      "telegram": "تلگرام",
+      "push_notification": "پوش نوتیفیکیشن",
+      "sms": "پیامک",
+      "email": "ایمیل",
+      "edit_pill": "ویرایش دارو",
+      "delete_pill": "حذف دارو"
+
+    },
+    "pills": {
+      "info": {
+        "legend": "اطلاعات دارو‌ها",
+        "icon": "نماد",
+        "title": "عنوان",
+        "description": "توضیحات",
+        "time": "زمان",
+        "methods": "روش‌ها",
+        "no_pill": "هیچ دارویی ثبت نشده است."
+      },
+      "new": {
+        "legend": "ثبت داروی جدید",
+        "icon": "نماد",
+        "title": "عنوان",
+        "description": "توضیحات",
+        "tablet": "قرص",
+        "pill": "کپسول",
+        "reminding_methods": "روش‌های یادآوری",
+        "telegram": "تلگرام",
+        "push_notification": "پوش نوتیفیکیشن",
+        "sms": "پیامک",
+        "email": "ایمیل",
+        "first_time_description": "کی برای اولین بار این دارو را به شما یادآوری کنیم؟",
+        "start_date": "روز شروع",
+        "start_time": "ساعت شروع",
+        "next_time_description": "دفعه‌ی بعد کی باید این دارو را به شما یادآوری کنیم؟",
+        "next_date": "روز بعدی",
+        "next_time": "ساعت بعدی",
+        "add_pill": "اضافه کردن دارو"
+      }
+
+    },
+    "settings": {
+      "push_notification": {
+        "legend": "دستگاه‌های متصل به پوش نوتیفیکیشن",
+        "linked_devices": "دستگاه‌های متصل",
+        "no_linked_device": "هنوز دستگاهی متصل نشده است!",
+        "link_device": "این دستگاه را متصل کن"
+      },
+      "messengers": {
+        "legend": "پیام رسان های متصل",
+        "telegram": "تلگرام",
+        "linked": "متصل شده",
+        "link_now": "الان متصل کن!"
+      }
+    }
   }
 }
