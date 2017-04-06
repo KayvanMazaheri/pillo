@@ -43,7 +43,8 @@
     "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "pm2": "^2.4.2",
-    "serve-favicon": "^2.4.1"
+    "serve-favicon": "^2.4.1",
+    "validator": "^7.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

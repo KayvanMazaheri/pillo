@@ -1,4 +1,5 @@
 var passport = require('passport')
+var validator = require('validator')
 var LocalStrategy = require('passport-local').Strategy
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
@@ -70,6 +71,8 @@ passport.use(new GoogleStrategy({
       }
     })
   } else {
+    // normalize email address
+    profile.emails[0].value = validator.normalizeEmail(profile.emails[0].value)
     User.findOne({ google: profile.id }, function (err, user) {
       if (err) {
         return done(err, user)
