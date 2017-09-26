@@ -11,7 +11,9 @@
     "start:production": "pm2 start server.js -i 4",
     "test": "standard && mocha",
     "watch": "npm-run-all --parallel watch:*",
-    "watch:css": "nodemon -e less -w public/css -x npm run build:css"
+    "watch:css": "nodemon -e less -w public/css -x npm run build:css",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "^2.2.0",
@@ -44,7 +46,8 @@
     "passport-local": "^1.0.0",
     "pm2": "^2.4.2",
     "serve-favicon": "^2.4.1",
-    "validator": "^7.0.0"
+    "validator": "^7.0.0",
+    "snyk": "^1.41.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -85,5 +88,6 @@
   "bugs": {
     "url": "https://github.com/KayvanMazaheri/pillo/issues"
   },
-  "homepage": "https://github.com/KayvanMazaheri/pillo#readme"
+  "homepage": "https://github.com/KayvanMazaheri/pillo#readme",
+  "snyk": true
 }
