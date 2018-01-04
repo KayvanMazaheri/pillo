@@ -64,9 +64,7 @@ Support Pillo by making a donation here:
 + Awesome cross-browser testing tool  
 <a href="https://www.browserstack.com" target="_blank"><img width="200" src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" atl="BroswerStack"></a>
 + 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/uq4aZbNyxxQtDK42XaJfnorV/KayvanMazaheri/pillo'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/uq4aZbNyxxQtDK42XaJfnorV/KayvanMazaheri/pillo.svg' />
-</a>
+
 
 # License
 The MIT License (MIT)
