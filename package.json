@@ -37,7 +37,7 @@
     "morgan": "^1.9.0",
     "node-telegram-bot-api": "^0.27.1",
     "nodemailer": "^3.1.8",
-    "nodemon": "^1.12.1",
+    "nodemon": "^1.14.11",
     "npm-run-all": "^4.1.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
