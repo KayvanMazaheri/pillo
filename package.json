@@ -14,7 +14,7 @@
     "watch:css": "nodemon -e less -w public/css -x npm run build:css"
   },
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.4",
     "basic-auth-connect": "^1.0.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
