@@ -32,7 +32,7 @@
     "kue": "^0.11.6",
     "less": "^2.7.3",
     "method-override": "^2.3.10",
-    "moment": "^2.19.1",
+    "moment": "^2.29.4",
     "mongoose": "^4.12.4",
     "morgan": "^1.9.0",
     "node-telegram-bot-api": "^0.27.1",
